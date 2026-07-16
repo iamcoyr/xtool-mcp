@@ -285,17 +285,17 @@ export function buildXcs(design: Design, options: BuildXcsOptions = {}): BuiltXc
   const machine =
     typeof options.machine === "string" ? getMachine(options.machine) : options.machine;
 
-  const extId = options.extId ?? deriveExtId(machine);
-  const extName = options.extName ?? machine?.name?.replace(/^xTool\s+/i, "") ?? extId;
+  const curatedExtId = machine?.xcs_ext_id;
+  const extId = options.extId ?? curatedExtId ?? deriveExtId(machine);
+  const extName =
+    options.extName ?? machine?.xcs_ext_name ?? machine?.name?.replace(/^xTool\s+/i, "") ?? extId;
   const lightSource = options.lightSource ?? lightSourceFor(machine?.category);
 
-  if (!options.extId && !machine) {
+  if (!options.extId && !curatedExtId) {
     warnings.push(
-      "No machine specified; extId defaulted. Set the correct machine so Studio targets the right device."
-    );
-  } else if (!options.extId && machine && !machine.notes?.includes("extId")) {
-    warnings.push(
-      `extId was derived as "${extId}" from the machine name. Verify it matches xTool's internal model code for ${extName}.`
+      machine
+        ? `extId was derived as "${extId}" and is NOT a verified xTool model code — confirm it in Studio, or pass extId explicitly.`
+        : "No machine specified; extId defaulted. Set the correct machine so Studio targets the right device."
     );
   }
 

@@ -64,7 +64,8 @@ async function main(): Promise<void> {
       const chunk = batch[j];
       if (!chunk) return;
       dims = vector.length || dims;
-      vectors.push({ id: chunk.id, vector });
+      // Round to 6 dp — plenty for cosine ranking, and keeps the shipped index small.
+      vectors.push({ id: chunk.id, vector: vector.map((x) => Math.round(x * 1e6) / 1e6) });
     });
     console.log(`Embedded ${Math.min(i + batchSize, chunks.length)}/${chunks.length}`);
   }

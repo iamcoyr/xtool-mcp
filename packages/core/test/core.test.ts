@@ -121,6 +121,27 @@ describe(".xcs build + validate", () => {
   });
 });
 
+describe("extId targeting", () => {
+  it("uses curated extId codes for known machines (no warning)", () => {
+    const d = emptyDesign(30, 30);
+    d.shapes.push({
+      kind: "rect",
+      id: "r",
+      x: 0,
+      y: 0,
+      width: 10,
+      height: 10,
+      op: { type: "cut", power_pct: 100, speed_mm_s: 10, passes: 1 }
+    });
+    const f2 = buildXcs(d, { machine: "F2 Ultra" });
+    expect(f2.extId).toBe("GS004-CLASS-4");
+    expect(f2.warnings.length).toBe(0);
+    expect(buildXcs(d, { machine: "D1" }).extId).toBe("D1");
+    // Unknown machine still derives, and warns.
+    expect(buildXcs(d, { machine: "P3" }).warnings.length).toBeGreaterThan(0);
+  });
+});
+
 describe("SVG import", () => {
   it("parses a rect from an SVG", () => {
     const design = svgToDesign(

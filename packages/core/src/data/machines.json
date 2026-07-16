@@ -40,7 +40,9 @@
       "https://uk.xtool.com/blogs/buyer-guide/xtool-d1-review",
       "https://www.xtool.com/pages/d1-announcement",
       "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting"
-    ]
+    ],
+    "xcs_ext_id": "D1",
+    "xcs_ext_name": "D1"
   },
   {
     "id": "d1-pro",
@@ -301,7 +303,9 @@
       "https://support.xtool.com/article/2913",
       "https://support.xtool.com/article/2406",
       "https://www.xtool.com/products/xtool-f1-slide-extension"
-    ]
+    ],
+    "xcs_ext_id": "F1",
+    "xcs_ext_name": "F1"
   },
   {
     "id": "f1-ultra",
@@ -342,7 +346,9 @@
       "https://support.xtool.com/article/1332",
       "https://support.xtool.com/article/2406",
       "https://au.xtool.com/products/xtool-f1-ultra-conveyor"
-    ]
+    ],
+    "xcs_ext_id": "F1Ultra",
+    "xcs_ext_name": "F1 Ultra"
   },
   {
     "id": "f2-ultra",
@@ -383,7 +389,9 @@
       "https://support.xtool.com/article/2909",
       "https://support.xtool.com/article/2406",
       "https://www.anodas.lt/en/xtool-f2-ultra-60w-mopa-laser-engraver"
-    ]
+    ],
+    "xcs_ext_id": "GS004-CLASS-4",
+    "xcs_ext_name": "F2 Ultra"
   },
   {
     "id": "f2",
@@ -465,7 +473,9 @@
       "https://support.xtool.com/article/2870",
       "https://www.xtool.com/blogs/buyer-guide/xtool-f-series-machine-choosing-guide",
       "https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver"
-    ]
+    ],
+    "xcs_ext_id": "GS009-CLASS-4",
+    "xcs_ext_name": "F2 Ultra UV"
   },
   {
     "id": "p2",

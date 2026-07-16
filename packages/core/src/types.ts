@@ -28,6 +28,10 @@ export interface Machine {
   key_features: string[];
   release_era: string | null;
   product_url: string | null;
+  /** xTool internal model code written to .xcs `extId`, when known (else derived + flagged). */
+  xcs_ext_id?: string;
+  /** xTool model display name written to .xcs `extName`, when known. */
+  xcs_ext_name?: string;
   notes?: string;
   sources?: string[];
 }
