@@ -1,0 +1,269 @@
+[
+  {
+    "id": "not-cutting-through",
+    "symptom": "Laser is not cutting all the way through the material",
+    "machines": [],
+    "causes": [
+      "Power too low",
+      "Speed too high",
+      "Insufficient passes",
+      "Incorrect focus height",
+      "Material is thicker or denser than the current settings assume"
+    ],
+    "fixes": [
+      "Run a small test cut on scrap before committing to the full job",
+      "Re-check focus distance for the actual material thickness",
+      "Increase power and/or reduce speed",
+      "Add an additional pass"
+    ],
+    "source_url": "https://support.xtool.com/article/825",
+    "tags": ["cut", "power", "speed", "focus", "passes"]
+  },
+  {
+    "id": "engraving-too-light",
+    "symptom": "Engraving comes out too light / faint",
+    "machines": [],
+    "causes": [
+      "Power too low for the material",
+      "Speed too high",
+      "Focus slightly off",
+      "On bitmap engraves, Dot Duration set too short on fiber/IR jobs"
+    ],
+    "fixes": [
+      "Run a Material Test Array to dial in optimal values rather than guessing",
+      "Re-focus",
+      "Increase power percentage and decrease speed",
+      "For bitmap/fiber jobs, increase Dot Duration (recommended above 100µs)"
+    ],
+    "source_url": "https://support.xtool.com/article/789",
+    "tags": ["engrave", "power", "focus", "bitmap", "dot-duration"]
+  },
+  {
+    "id": "engraving-too-dark-scorched",
+    "symptom": "Engraving is too dark, scorched, or shows excessive charring",
+    "machines": [],
+    "causes": [
+      "Power too high or speed too low for the material",
+      "Too many passes",
+      "Material carbonizes/burns at the current energy density (especially MDF and some plywoods)"
+    ],
+    "fixes": [
+      "Reduce power and/or increase speed",
+      "Reduce pass count",
+      "For MDF specifically, favor a higher-speed, multi-pass approach over a single very-slow, high-power pass to reduce charring"
+    ],
+    "source_url": "https://support.xtool.com/article/2468",
+    "tags": ["engrave", "charring", "power", "speed", "mdf"]
+  },
+  {
+    "id": "focus-issues-blurry-inconsistent",
+    "symptom": "Focus issues — engraving/cutting is blurry, inconsistent, or the cut fails only in parts of the design",
+    "machines": [],
+    "causes": [
+      "Manual focus tool not used correctly",
+      "Material surface is not flat/level",
+      "Auto-focus (on supported machines) failed to register true material height (e.g., on reflective, transparent, or unusually textured material)"
+    ],
+    "fixes": [
+      "Re-level the material and re-run focus",
+      "For manual-focus machines, use the physical focus tool/gauge exactly per the material's actual thickness at the point being processed",
+      "For auto-focus machines, retry the auto-focus routine or fall back to manual focus if auto-focus repeatedly fails on a difficult material"
+    ],
+    "source_url": null,
+    "tags": ["focus", "cut", "engrave", "material"]
+  },
+  {
+    "id": "usb-not-connecting",
+    "symptom": "Machine will not connect over USB",
+    "machines": [],
+    "causes": [
+      "Faulty/incompatible USB cable",
+      "Driver not installed",
+      "Wrong USB port",
+      "The software wasn't fully closed/reopened after a previous failed connection attempt"
+    ],
+    "fixes": [
+      "Use the cable that shipped with the machine (or a verified data-capable replacement, not a charge-only cable)",
+      "Try a different USB port (avoid unpowered hubs)",
+      "Reinstall/update USB drivers if prompted",
+      "Fully quit and relaunch XCS/Studio",
+      "Power-cycle the machine"
+    ],
+    "source_url": null,
+    "tags": ["connection", "usb", "driver", "cable"]
+  },
+  {
+    "id": "wifi-not-connecting",
+    "symptom": "Machine will not connect over Wi-Fi",
+    "machines": [],
+    "causes": [
+      "Machine and controlling device are on different Wi-Fi networks/bands (many xTool machines only support 2.4GHz, not 5GHz)",
+      "Incorrect Wi-Fi password entered during setup",
+      "Router firewall/AP isolation blocking local device discovery"
+    ],
+    "fixes": [
+      "Confirm the router network being joined is 2.4GHz (create a dedicated 2.4GHz SSID if the router only broadcasts a combined/5GHz-preferred network)",
+      "Re-run the in-app Wi-Fi setup wizard and re-enter the password carefully",
+      "Temporarily disable AP/client isolation on the router if enabled",
+      "Ensure the controlling device is on the same network/subnet as the machine"
+    ],
+    "source_url": null,
+    "tags": ["connection", "wifi", "network", "setup"]
+  },
+  {
+    "id": "fire-flare-ups-during-processing",
+    "symptom": "Fire, flare-ups, or flame during processing",
+    "machines": [],
+    "causes": [
+      "Excess power/too-slow speed causing sustained combustion rather than clean ablation",
+      "Processing a prohibited/flammable material",
+      "Processing material thicker than the machine's safe rated maximum (e.g., P2 plywood over 12mm)",
+      "Leaving the machine unattended while it smolders after a job"
+    ],
+    "fixes": [
+      "Immediately stop the job",
+      "If flame is visible, use an appropriate fire extinguisher (do not use water on an electrical/laser fire) or smother small flare-ups",
+      "Never leave a running laser unattended",
+      "Never exceed official maximum-thickness guidance for a given material/machine",
+      "Reduce power/increase speed for future runs of the same material",
+      "Ensure ventilation/air assist is functioning to blow combustion byproducts away from the cut kerf"
+    ],
+    "source_url": "https://support.xtool.com/article/825",
+    "tags": ["fire", "safety", "power", "ventilation", "air-assist"]
+  },
+  {
+    "id": "frame-preview-misaligned-with-cut",
+    "symptom": "Misalignment between the design preview/frame and the actual cut/engrave position",
+    "machines": [],
+    "causes": [
+      "Camera calibration drift (on camera-equipped machines like S1)",
+      "Material moved after framing but before processing",
+      "Material is not perfectly flat/seated in the work area"
+    ],
+    "fixes": [
+      "Avoid touching/shifting material between framing and processing",
+      "Re-frame immediately before processing rather than relying on an earlier frame",
+      "Use a honeycomb panel, riser base, or magnets/pins to secure material flat and stationary",
+      "Re-run camera calibration per the machine's calibration routine if using camera-assisted positioning"
+    ],
+    "source_url": null,
+    "tags": ["framing", "camera", "calibration", "alignment"]
+  },
+  {
+    "id": "edge-scorching-burn-marks",
+    "symptom": "Material scorching / burn marks around the edges of a cut or engrave",
+    "machines": [],
+    "causes": [
+      "Excess power",
+      "Insufficient air assist",
+      "Residual heat buildup from slow speed/multiple passes without adequate cooling between passes"
+    ],
+    "fixes": [
+      "Verify air assist is enabled and the nozzle/airflow path is clear",
+      "Reduce power and/or increase speed",
+      "On multi-pass jobs, allow brief cooling if scorching is severe",
+      "For wood specifically, masking tape (blue painter's tape) over the surface can reduce visible edge scorching on engraves"
+    ],
+    "source_url": "https://support.xtool.com/article/825",
+    "tags": ["scorching", "air-assist", "power", "wood", "engrave"]
+  },
+  {
+    "id": "software-freezes-crashes-during-job",
+    "symptom": "Software freezes, crashes, or becomes unresponsive during a job",
+    "machines": [],
+    "causes": [
+      "Outdated software version",
+      "Corrupted project file",
+      "Insufficient system resources (very large bitmap images)",
+      "A USB/Wi-Fi communication drop mid-job that the UI doesn't recover from gracefully"
+    ],
+    "fixes": [
+      "Save work frequently as separate project files to avoid losing progress to a crash",
+      "Update to the latest XCS or Studio version",
+      "Reduce imported image resolution/file size where possible",
+      "Restart the software and machine before retrying"
+    ],
+    "source_url": null,
+    "tags": ["software", "crash", "xcs", "studio", "connection"]
+  },
+  {
+    "id": "error-code-halt-lid-open-protection",
+    "symptom": "Machine detects an error code and halts (e.g., lid open, protection triggered)",
+    "machines": ["s1"],
+    "causes": [
+      "Safety interlock triggered (lid/cover opened mid-job on enclosed machines like S1)",
+      "A specific protection error code such as S1's fire-risk M53 F5 (small design area + high power + low speed)"
+    ],
+    "fixes": [
+      "Close the lid/cover fully and resume/restart the job",
+      "If a specific error code appears, look it up in the machine's error-code reference article and follow the documented remedy",
+      "For M53 F5 specifically: reduce power, increase speed, or enlarge the design's bounding area to fall outside the risk threshold"
+    ],
+    "source_url": "https://support.xtool.com/article/1481",
+    "tags": ["error-code", "s1", "interlock", "fire", "lid"]
+  },
+  {
+    "id": "colors-misassigned-to-wrong-processing-type",
+    "symptom": "Colors/vector layers imported from a design file are misassigned to the wrong processing type",
+    "machines": [],
+    "causes": [
+      "The design file's original color-to-layer mapping doesn't match the software's expected color convention (each distinct stroke/fill color typically maps to a separate processing layer)"
+    ],
+    "fixes": [
+      "Before import, standardize distinct colors in the source vector file for each intended processing type (e.g., red stroke = cut, blue stroke = score, black fill = engrave)",
+      "After import, manually reassign any mismapped layer's processing type in the software's layer panel"
+    ],
+    "source_url": null,
+    "tags": ["import", "layers", "color-mapping", "cut", "engrave"]
+  },
+  {
+    "id": "bitmap-engrave-banding-streaks",
+    "symptom": "Bitmap/photo engrave looks banded, streaky, or has visible line artifacts",
+    "machines": [],
+    "causes": [
+      "DPI too low for the level of detail attempted",
+      "Wrong bitmap mode selected for the laser type in use (e.g., using plain grayscale mode on a fiber/IR job instead of Jarvis)",
+      "Bi-directional scanning introducing slight registration offset on a particular machine/material combination"
+    ],
+    "fixes": [
+      "Use the bitmap mode recommended for the laser type (Jarvis for infrared/fiber, grayscale for blue diode)",
+      "Increase DPI for finer detail",
+      "Switch to uni-directional scanning if banding persists"
+    ],
+    "source_url": "https://support.xtool.com/article/789",
+    "tags": ["engrave", "bitmap", "dpi", "banding", "raster"]
+  },
+  {
+    "id": "settings-fail-on-similar-looking-material",
+    "symptom": "Cutting/engraving works fine on one material but fails or looks wrong on a visually similar one",
+    "machines": [],
+    "causes": [
+      "Materials that look alike (e.g., cast vs. extruded acrylic, or different plywood species/adhesive types) can have very different laser absorption properties",
+      "Settings tuned for one will not transfer directly to the other"
+    ],
+    "fixes": [
+      "Always run a Material Test Array or small scrap test when switching to a new/different material batch, even if it looks similar to a previously-used one",
+      "Consult the Material Settings Library for the specific material sub-type rather than assuming a generic category setting will work"
+    ],
+    "source_url": "https://support.xtool.com/article/555",
+    "tags": ["material", "acrylic", "plywood", "settings", "test"]
+  },
+  {
+    "id": "wont-power-on-or-laser-wont-fire",
+    "symptom": "Machine won't power on, or powers on but the laser module doesn't fire at all",
+    "machines": [],
+    "causes": [
+      "Power supply/adapter fault",
+      "Safety interlock not satisfied (lid open, key-lock switch off on machines that have one)",
+      "The laser module itself is disconnected/faulty"
+    ],
+    "fixes": [
+      "Confirm the power adapter is fully seated and the outlet is live",
+      "Ensure all lid/cover interlocks are closed and any physical key-switch is in the \"on\"/unlocked position",
+      "Check the laser module's cable connection for damage or looseness",
+      "If the module still doesn't fire after these checks, contact xTool support for a possible hardware fault"
+    ],
+    "source_url": null,
+    "tags": ["power", "interlock", "laser-module", "hardware"]
+  }
+]

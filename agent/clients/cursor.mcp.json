@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "xtool-remote": {
+      "url": "https://xtool-mcp.doublexl.workers.dev/mcp"
+    },
+    "xtool-local": {
+      "command": "npx",
+      "args": ["-y", "xtool-mcp"]
+    }
+  }
+}

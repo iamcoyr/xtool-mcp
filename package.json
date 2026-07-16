@@ -1,0 +1,39 @@
+{
+  "name": "xtool-mcp-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Unofficial Model Context Protocol server, agent, and llms.txt for xTool laser machines.",
+  "packageManager": "pnpm@10.34.3",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter=./packages/* build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "start:stdio": "pnpm --filter xtool-mcp start",
+    "dev:worker": "pnpm --filter @xtool-mcp/worker dev",
+    "deploy:worker": "pnpm --filter @xtool-mcp/worker deploy",
+    "build:embeddings": "tsx scripts/build-embeddings.ts",
+    "build:llms": "tsx scripts/build-llms-txt.ts"
+  },
+  "keywords": [
+    "xtool",
+    "laser",
+    "laser-cutter",
+    "laser-engraver",
+    "mcp",
+    "model-context-protocol",
+    "cloudflare-workers",
+    "llms-txt"
+  ],
+  "author": "Coy Robison",
+  "license": "MIT",
+  "devDependencies": {
+    "@xtool-mcp/core": "workspace:*",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

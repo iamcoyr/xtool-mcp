@@ -1,0 +1,598 @@
+[
+  {
+    "id": "d1",
+    "name": "xTool D1",
+    "category": "diode",
+    "laser_power_w": [
+      5,
+      10,
+      20
+    ],
+    "work_area_mm": {
+      "width": 432,
+      "height": 406
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi",
+      "TF card"
+    ],
+    "driver": "CH340",
+    "key_features": [
+      "Compressed spot laser technology (0.08mm spot size)",
+      "Twin-beam laser design on 10W/20W modules for higher effective power",
+      "All-steel wheel and shaft drive for accuracy and durability",
+      "Interchangeable 5W/10W/20W diode laser modules (8-pin connector, not interchangeable with D1 Pro's 9-pin modules)",
+      "Offline operation via TF card",
+      "Optional rotary attachment and risers for cylindrical/taller objects"
+    ],
+    "release_era": "2021",
+    "product_url": "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting",
+    "notes": "Original/base model (Red Dot Design Award winner 2022). Distinct from D1 Pro: uses an 8-pin laser-module connector (D1 Pro uses 9-pin) so modules are not interchangeable, and D1 has fewer safety features (basic tilt alarm only; no flame detector or limit switches). Max routing speed is officially cited by xTool support as 100mm/s, though multiple third-party spec sheets and older regional blog posts cite 160-200mm/s (~10,000mm/min) for the 10W/20W heads -- this discrepancy could not be fully resolved; treat 100mm/s as the more authoritative figure from xTool's own 'Differences between D1 and D1 Pro' support article. Entire D Series (D1, D1 Pro, D1 Pro 2.0) was discontinued by xTool effective January 1, 2025, with legacy accessory support continuing through approximately January 2026. As of this July 2026 research, D1 is no longer sold new on xtool.com; included here as a notable discontinued model per task instructions. product_url is the historical canonical page, which may show a discontinuation notice or redirect.",
+    "sources": [
+      "https://support.xtool.com/article/847",
+      "https://xtool.zendesk.com/hc/en-us/articles/14063343301143-D1-Product-Introduction",
+      "https://xtool.zendesk.com/hc/en-us/articles/4412216153879-xTool-D1-5W-VS-10W",
+      "https://uk.xtool.com/blogs/buyer-guide/xtool-d1-review",
+      "https://www.xtool.com/pages/d1-announcement",
+      "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting"
+    ]
+  },
+  {
+    "id": "d1-pro",
+    "name": "xTool D1 Pro",
+    "category": "diode",
+    "laser_power_w": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "work_area_mm": {
+      "width": 430,
+      "height": 400
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi",
+      "TF card"
+    ],
+    "driver": "CH340",
+    "key_features": [
+      "Dual-beam/compressed-spot diode technology for higher effective power per watt",
+      "Position limit switches, flame detector, and tilt/shake alarm",
+      "Interchangeable plug-and-play 5W/10W/20W/40W laser modules (9-pin connector), plus optional 2W 1064nm infrared add-on module",
+      "Up to 400mm/s routing speed",
+      "Stackable risers (up to 190mm+ height with 2 sets) for taller objects",
+      "4-in-1 RA2 Pro rotary attachment support (roller, chuck, sphere, ring modes)"
+    ],
+    "release_era": "2022",
+    "product_url": "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w",
+    "notes": "First-generation D1 Pro (sometimes called 'D1 Pro 1.0' in support docs to distinguish from the 2.0 hardware revision). Work area and laser spot size vary by installed module: 430x400mm/0.06x0.06mm (5W), 430x400mm/0.08x0.06mm (10W), 430x390mm/0.08x0.10mm (20W), 430x348mm (expandable to 909x430mm with Extension Kit)/0.10x0.15mm (40W); the 40W module was released later (~2023) as a separate octa-diode upgrade kit. The 40W and 1064nm IR modules are separately-sold add-ons, not bundled by default. D1 Pro was later superseded by a 2.0 hardware revision (see 'd1-pro-2' entry) sharing the same marketing name and core laser specs. Entire D Series discontinued effective January 1, 2025; not sold new on xtool.com as of this July 2026 research, though legacy accessories were committed through approximately January 2026.",
+    "sources": [
+      "https://support.xtool.com/article/847",
+      "https://support.xtool.com/article/208",
+      "https://www.xtool.com/products/40w-laser-module-for-d1-pro",
+      "https://www.xtool.com/products/xtool-1064nm-infrared-laser-module",
+      "https://uk.xtool.com/blogs/news/introducing-xtool-d1-pro-40w-laser-module",
+      "https://the-gadgeteer.com/2022/09/27/xtool-d1-pro-laser-engraving-and-cutting-machine-review-shiny-red-powerful-and-it-has-a-laser/",
+      "https://www.xtool.com/pages/d1-announcement"
+    ]
+  },
+  {
+    "id": "d1-pro-2",
+    "name": "xTool D1 Pro 2.0",
+    "category": "diode",
+    "laser_power_w": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "work_area_mm": {
+      "width": 430,
+      "height": 400
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi",
+      "TF card"
+    ],
+    "driver": "CH340",
+    "key_features": [
+      "Adds a physical emergency-stop switch (new vs. original D1 Pro) triggered by flame, smoke, or tipping detection",
+      "Gyroscope-based tip/tilt sensor for auto-stop and alarm",
+      "Redesigned light shield to reduce smoke/dust contamination of laser lenses",
+      "Improved gantry structure for better rigidity/precision",
+      "Optional 40W dual-diode upgrade and optional 2W 1064nm infrared add-on module",
+      "4-in-1 RA2 Pro rotary attachment and stackable risers",
+      "Up to 400mm/s routing speed and 0.01mm motion precision"
+    ],
+    "release_era": "2023",
+    "product_url": "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w",
+    "notes": "IMPORTANT: 'D1 Pro 2.0' is not sold under a separately-named/separately-URLed SKU on xtool.com -- it is a hardware revision within the 'D1 Pro' product family (adds emergency-stop switch, gyroscope tip sensor, improved light shield/gantry, ~2023), and the same product_url historically hosted both 1.0 and 2.0 hardware as purchase-time variants. Core laser specs (power options, work area, spot size, speed) are identical to first-gen D1 Pro for equivalent wattage modules -- the 2.0 revision changed safety/build hardware, not laser performance. An Ethernet connectivity option appeared in one product page's spec table but is far less consistently documented than USB/Wi-Fi/TF card across support articles, so it was omitted here as lower-confidence; if the catalog wants maximal coverage, Ethernet could be added with a confidence caveat. Entire D Series discontinued effective January 1, 2025; not sold new on xtool.com as of this July 2026 research.",
+    "sources": [
+      "https://support.xtool.com/article/1160",
+      "https://top3dshop.com/product/xtool-d1-pro-10w-laser-cutter-and-engraver",
+      "https://www.tdreefhuys.com/en/Webwinkel-Product-844374567/xTool-D1-Pro-2.0-20W-Metal-Grey.html",
+      "https://www.xtool.com/products/40w-laser-module-for-d1-pro",
+      "https://www.xtool.com/products/xtool-1064nm-infrared-laser-module",
+      "https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w?variant=44085765177583",
+      "https://www.xtool.com/pages/d1-announcement"
+    ]
+  },
+  {
+    "id": "s1",
+    "name": "xTool S1 Enclosed Diode Laser Cutter",
+    "category": "diode",
+    "laser_power_w": [
+      10,
+      20,
+      40
+    ],
+    "work_area_mm": {
+      "width": 498,
+      "height": 319
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": "GD32",
+    "key_features": [
+      "Enclosed Class 1 laser safety with lid-open auto-stop and 5-direction flame detection",
+      "Switchable 10W/20W/40W diode modules plus optional 2W 1064nm IR module for metal/plastic engraving",
+      "600 mm/s max working speed with aerospace-grade aluminum frame rails",
+      "Pin-point absolute-coordinate positioning (no camera needed) for precise placement",
+      "Auto-focus system with electric Z-axis and multi-point 3D focus ranging",
+      "Optional Automatic Conveyor Feeder accessory (not a native pass-through) for feeding material up to ~3000mm long, ~14mm thick; optional riser base and RA2 Pro rotary attachment"
+    ],
+    "release_era": "2023",
+    "product_url": "https://www.xtool.com/products/xtool-s1-laser-cutter",
+    "notes": "Laser-only, enclosed machine (not a hybrid laser+blade device) -- category confirmed as 'diode'. The 2W 1064nm IR module is a separate add-on head for metal/plastic marking, included in laser_power_w for completeness though it is functionally distinct from the visible-light 10/20/40W heads. Work area varies slightly by installed module (~498x319mm for 40W vs ~498x330mm for 20W/10W); the 40W figure is used as the flagship spec. S1 has NO native pass-through slot; max_pass_through_thickness_mm is set to null here because the ~14mm/3000mm figure only applies via the separately-purchased Automatic Conveyor Feeder accessory, not the base unit -- a looser reading could set this to 14 if accessory-enabled capability counts, but null better reflects out-of-box capability. No confirmed dedicated Ethernet port for S1 (xTool support states physical Ethernet ports are 'currently only applicable to the P Series and Apparel printer'); IP-over-Wi-Fi is possible but distinct from a wired port, so Ethernet is omitted from connectivity. Supports both legacy XCS and the newer xTool Studio app.",
+    "sources": [
+      "https://support.xtool.com/article/1106",
+      "https://www.xtool.com/products/xtool-s1-laser-cutter",
+      "https://au.xtool.com/products/xtool-s1-laser-cutter",
+      "https://support.xtool.com/article/1351",
+      "https://support.xtool.com/article/2406",
+      "https://support.xtool.com/article/2810"
+    ]
+  },
+  {
+    "id": "m1",
+    "name": "xTool M1",
+    "category": "hybrid",
+    "laser_power_w": [
+      5,
+      10
+    ],
+    "work_area_mm": {
+      "width": 385,
+      "height": 300
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": "RNDIS",
+    "key_features": [
+      "Combines a diode laser with a mechanical blade cutter (vinyl/paper/stickers) in one enclosure -- marketed by xTool as 'the world's first hybrid desktop laser cutter'",
+      "Switchable laser (engrave/cut) and blade-cut processing modes in the same footprint",
+      "16MP smart camera for object positioning and material preview",
+      "0.01mm engraving accuracy, 0.08x0.08mm laser spot size",
+      "Auto-focus laser module; optional riser base (engrave objects up to ~120mm tall) and rotary attachment support",
+      "Officially discontinued -- removed from xTool's regional online stores between April-August 2025"
+    ],
+    "release_era": "2021",
+    "product_url": "https://www.xtool.eu/products/xtool-m1-10w-smart-2-in-1-laser-engraver-and-vinyl-cutter",
+    "notes": "CATEGORY JUDGMENT CALL: set to 'hybrid' per task instruction (M1 combines two distinct PROCESSING mechanisms -- laser + mechanical blade -- matching xTool's own 'hybrid' marketing language). However, the underlying laser engine is a single diode-laser technology (not a multi-laser-type combo like CO2+diode, which 'hybrid' more commonly denotes in laser taxonomies) -- if 'category' is meant to describe laser TYPE rather than overall machine function, 'diode' would be the stricter technical answer. Wattage is exactly 5W or 10W (no other options; not user-upgradeable between tiers). Work area is 385x300mm in laser mode but shrinks to 365x300mm in blade-cut mode -- the laser-mode figure is used as 'standard' per task instruction. No pass-through slot (confirmed via xTool's own M1-vs-Glowforge-Aura comparison, which lists M1's passthrough as none). Officially discontinued per xTool's 'M1 Announcement' pages (phased out region-by-region April-August 2025); original US product URL now 404s, so the EU listing is used as best-available canonical URL. Driver is RNDIS (confirmed via multiple official xTool driver-support articles explicitly listing 'RNDIS Driver: For F1 Ultra, F1, M1 Ultra, M1, P2 Series'), NOT CH340 as might be assumed by analogy to D1's naming -- CH340 is explicitly D-Series-only per the same docs. Only XCS is listed on the official spec sheet (unofficial/unsupported LightBurn workaround exists but xTool disclaims full compatibility, so not counted as supported here).",
+    "sources": [
+      "https://support-pre.xtool.com/article/1912",
+      "https://support.xtool.com/article/1912",
+      "https://www.xtool.com/blogs/buyer-guide/xtool-m1-vs-glowforge-aura",
+      "https://www.xtool.com/blogs/buyer-guide/xtool-m1-vs-xtool-m1-ultra",
+      "https://www.xtool.com/pages/m1-announcement",
+      "https://www.xtool.eu/products/xtool-m1-10w-smart-2-in-1-laser-engraver-and-vinyl-cutter",
+      "https://support.xtool.com/article/2406",
+      "https://support.xtool.com/article/1910",
+      "https://www.firstdayofhome.com/xtool-m1-review/"
+    ]
+  },
+  {
+    "id": "m1-ultra",
+    "name": "xTool M1 Ultra",
+    "category": "hybrid",
+    "laser_power_w": [
+      10,
+      20
+    ],
+    "work_area_mm": {
+      "width": 300,
+      "height": 300
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": "RNDIS",
+    "key_features": [
+      "'World's first 4-in-1 craft machine': diode laser engraving/cutting, mechanical blade cutting, inkjet printing (CMY, optional add-on), and pen drawing, all switchable in ~3 seconds",
+      "Four interchangeable blade types: fine-point (1.5mm), cutting/tapered (2.5mm), rotary (fabrics, optional), foil transfer tip (optional)",
+      "10W or 20W switchable diode laser module; 20W cuts up to 10mm basswood in one pass",
+      "No built-in camera -- uses patented Pin-point Positioning instead",
+      "400 mm/s max engraving speed (vs 250mm/s on original M1)",
+      "Supports 1,000+ materials across its 4 modes"
+    ],
+    "release_era": "2024",
+    "product_url": "https://www.xtool.com/products/xtool-m1-ultra-the-worlds-first-4-in-1-craft-machine",
+    "notes": "CATEGORY JUDGMENT CALL: same caveat as M1 (see that entry) -- set to 'hybrid' per task instruction, though the laser engine itself is a single diode technology; M1 Ultra is an even weaker fit for 'hybrid' in the CO2+diode sense since it adds THREE non-laser processes (blade, inkjet, pen), not just one. Wattage is exactly 10W or 20W (no 5W tier, unlike original M1). Work area is mode-dependent: laser 300x300mm (used as 'standard'), blade cutting/tapered mode ~295x295mm, inkjet ~294-298mm, pen 300x300mm -- laser-mode figure notably smaller than M1's 385x300mm despite M1 Ultra being the newer/larger-footprint machine (a verified spec tradeoff, not a research error). No pass-through slot (fully enclosed craft machine with fixed baseplate). Shows 'Out of Stock' for the base US SKU at various points but is an active (not discontinued) product, unlike M1. Supports both XCS and xTool Studio per its official User Guide. Driver is RNDIS (confirmed via official driver-support articles), not CH340.",
+    "sources": [
+      "https://support.xtool.com/article/1396",
+      "https://support.xtool.com/article/1584",
+      "https://www.xtool.com/products/xtool-m1-ultra-the-worlds-first-4-in-1-craft-machine",
+      "https://www.xtool.com/blogs/buyer-guide/xtool-m1-vs-xtool-m1-ultra",
+      "https://support.xtool.com/article/2406",
+      "https://top3dshop.com/product/xtool-m1-ultra-20w-4-in-1-craft-machine"
+    ]
+  },
+  {
+    "id": "f1",
+    "name": "xTool F1",
+    "category": "hybrid",
+    "laser_power_w": [
+      10
+    ],
+    "work_area_mm": {
+      "width": 115,
+      "height": 115
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": "RNDIS",
+    "key_features": [
+      "Dual laser as standard equipment: 10W 455nm diode + 2W 1064nm infrared (fires one at a time, auto-switched, not simultaneous)",
+      "Handheld/portable design (~4.6 kg, carry handle)",
+      "Up to 4000 mm/s engraving speed via galvanometer system",
+      "Fully enclosed, laser-light-filtering cover with built-in fan/air purifier",
+      "Manual and auto-focus with live high-speed preview",
+      "Optional Slide Extension accessory expands work area to 115 x 400mm (not a built-in pass-through)"
+    ],
+    "release_era": "2024",
+    "product_url": "https://www.xtool.com/products/xtool-f1",
+    "notes": "CATEGORY JUDGMENT CALL: dual laser (10W diode + 2W infrared) is standard/always included on the base F1 SKU (distinct from a diode-only 'F1 Lite' variant), so 'hybrid' is used rather than 'diode'. laser_power_w reports only the diode (10W); the 2W 1064nm infrared module is noted separately in key_features since the schema has one power array. No built-in camera on base F1 (confirmed via official xtool.com comparison table: 'Built-in Camera: No' for F1 vs 'Yes' for F1 Ultra) -- be careful not to conflate F1 with F2's 50MP camera feature. Max cut depth (not pass-through) is ~8mm basswood / 5-6mm black acrylic with the diode laser; the infrared laser can only engrave metal (~0.05mm max depth), not cut it. Supports XCS, xTool Studio, and third-party LightBurn.",
+    "sources": [
+      "https://support.xtool.com/article/64",
+      "https://support.xtool.com/article/12",
+      "https://ca.xtool.com/products/xtool-f1",
+      "https://support.xtool.com/article/2913",
+      "https://support.xtool.com/article/2406",
+      "https://www.xtool.com/products/xtool-f1-slide-extension"
+    ]
+  },
+  {
+    "id": "f1-ultra",
+    "name": "xTool F1 Ultra",
+    "category": "hybrid",
+    "laser_power_w": [
+      20
+    ],
+    "work_area_mm": {
+      "width": 220,
+      "height": 220
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": "RNDIS",
+    "key_features": [
+      "Dual laser as standard equipment: 20W 455nm diode + 20W 1064nm true fiber laser (not DPSS)",
+      "Up to 10,000 mm/s max processing speed",
+      "Built-in camera above the work area for snapshot/live preview and positioning (megapixel spec not confirmed by official docs)",
+      "Touchscreen controller with 7GB onboard storage for offline processing",
+      "Auto-focus with camera + manual two-dot alignment",
+      "Optional Auto Streamline Conveyor accessory (not built-in) extends processing area to 220x500mm, max material thickness ~81.5mm through the conveyor"
+    ],
+    "release_era": "2024",
+    "product_url": "https://www.xtool.com/products/xtool-f1-ultra-20w-fiber-diode-dual-laser-engraver",
+    "notes": "Both lasers (20W diode + 20W fiber/infrared) are standard equipment, so 'hybrid' is used. laser_power_w reports only the diode (20W at 445nm); the fiber laser is a separate 20W module at 1064nm, noted in key_features. Internal working area is 220x220x145mm (WxDxH) per the official User Guide; the 220x500mm figure only applies with the separately-purchased Auto Streamline Conveyor accessory, so max_pass_through_thickness_mm is null for the base machine rather than the accessory's ~81.5mm figure. Camera resolution could not be confirmed with a specific megapixel number -- marketing pages contain '16MP' and '50MP' camera mentions that appear (on close reading) to actually describe the unrelated P2 and F2 models respectively in comparison contexts; the dedicated F1 Ultra support article confirms a camera exists but states no MP figure, so none is reported here to avoid inventing a spec. Supports XCS, xTool Studio, and LightBurn (unlike F2 Ultra, which dropped LightBurn support).",
+    "sources": [
+      "https://support.xtool.com/article/1353",
+      "https://support.xtool.com/article/3036",
+      "https://www.xtool.com/products/xtool-f1-ultra-20w-fiber-diode-dual-laser-engraver",
+      "https://support.xtool.com/article/1332",
+      "https://support.xtool.com/article/2406",
+      "https://au.xtool.com/products/xtool-f1-ultra-conveyor"
+    ]
+  },
+  {
+    "id": "f2-ultra",
+    "name": "xTool F2 Ultra",
+    "category": "hybrid",
+    "laser_power_w": [
+      40
+    ],
+    "work_area_mm": {
+      "width": 220,
+      "height": 220
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": null,
+    "key_features": [
+      "Dual laser as standard equipment: 40W 445nm blue diode + 60W 1064nm infrared MOPA fiber laser -- larger enclosed desktop unit, not handheld/portable like F1 series",
+      "MOPA (Master Oscillator Power Amplifier) fiber laser with adjustable pulse width (2-500ns) and frequency (30kHz-4000kHz) for color marking on metals",
+      "Up to 15,000 mm/s max processing speed",
+      "Dual 48MP cameras for smart preview/auto-positioning",
+      "Single-laser variant available ('F2 Ultra (Single)') with only the 60W MOPA fiber laser, no diode",
+      "7GB onboard storage for offline processing; optional Auto Streamline Conveyor accessory extends processing area to 220x500mm",
+      "No longer compatible with LightBurn (dropped by xTool for data-security reasons); Studio-only, not compatible with legacy XCS"
+    ],
+    "release_era": "2025",
+    "product_url": "https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver",
+    "notes": "Both lasers (40W diode + 60W MOPA fiber) ship standard on the dual-laser SKU, so 'hybrid' is used; a separate single-laser-only 'F2 Ultra (Single)' SKU also exists (not covered as its own catalog entry here). laser_power_w reports only the diode (40W); the MOPA fiber laser is a separate 60W 1064nm module, noted in key_features. Internal working area is 220x220mm; the 220x500mm figure only applies with the optional Auto Streamline Conveyor accessory (shared with F1 Ultra's conveyor, ~81.5mm max material thickness), so max_pass_through_thickness_mm is null for the base machine. Software: official docs (support.xtool.com/article/2909) state F2/F2 Ultra/F2 Ultra UV are supported ONLY by the newer xTool Studio app, NOT legacy XCS -- this differs from earlier F-series machines and is an important distinction. Driver could not be confirmed: xTool's official RNDIS driver list explicitly names 'F1 Ultra, F1, M1 Ultra, M1, P2 Series' and does not include F2/F2 Ultra, so RNDIS was not assumed; left null rather than guessed. No TF/SD card slot found (7GB internal storage, expandable only via external USB drive).",
+    "sources": [
+      "https://support.xtool.com/article/1961",
+      "https://support.xtool.com/article/3029",
+      "https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver",
+      "https://support.xtool.com/article/2909",
+      "https://support.xtool.com/article/2406",
+      "https://www.anodas.lt/en/xtool-f2-ultra-60w-mopa-laser-engraver"
+    ]
+  },
+  {
+    "id": "f2",
+    "name": "xTool F2",
+    "category": "hybrid",
+    "laser_power_w": [
+      15
+    ],
+    "work_area_mm": {
+      "width": 115,
+      "height": 115
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": null,
+    "key_features": [
+      "Dual laser as standard equipment: 15W blue diode (445±15nm, non-metals) + 5W infrared (1064±5nm, metal marking, average power figures)",
+      "Built-in 50MP autofocus camera with live 1:1 workspace preview, visual alignment, one-click auto-fill, batch processing",
+      "Engraving/cutting speed up to 6,000mm/s",
+      "Standard work area 115x115mm; expandable to 115x400mm with optional Slide Extension accessory",
+      "Maximum processing height 120mm",
+      "Successor to F1; starts at $1,499 (US); works exclusively with xTool Studio -- LightBurn support removed for data-security reasons",
+      "Supports curved-surface engraving, relief/embossment, and color engraving on stainless steel/titanium/copper via the IR laser"
+    ],
+    "release_era": "2025",
+    "product_url": "https://www.xtool.com/products/xtool-f2-5w-ir-15w-diode-portable-dual-laser-engraver",
+    "notes": "Non-Ultra successor to F1, announced ~October 2025. Combines a 15W diode and 5W infrared laser as standard (non-optional) equipment, mirroring the F1/F1 Ultra pattern, so 'hybrid' is used rather than 'diode' or 'infrared' alone. laser_power_w reports only the diode (15W); the 5W 1064nm infrared laser (engrave-only on metal, cannot cut metal) is noted in key_features. No TF/SD card offline slot found (unlike D-series machines); offline-adjacent workflow instead uses an optional Touchscreen Controller accessory and USB-drive file export. Driver could not be confirmed -- not listed in any official CH340/GD32/RNDIS driver-mapping document; xTool Studio handles driver installation generically without naming a chipset in available docs, so left null rather than guessed. max_pass_through_thickness_mm is null since F2 is an enclosed desktop unit with a max processing height (120mm) rather than a pass-through mechanism.",
+    "sources": [
+      "https://www.xtool.com/products/xtool-f2-5w-ir-15w-diode-portable-dual-laser-engraver",
+      "https://support.xtool.com/article/2013",
+      "https://support.xtool.com/article/2818",
+      "https://support.xtool.com/article/2654",
+      "https://support.xtool.com/article/2406",
+      "https://www.xtool.com/blogs/buyer-guide/xtool-f-series-machine-choosing-guide"
+    ]
+  },
+  {
+    "id": "f2-ultra-uv",
+    "name": "xTool F2 Ultra UV",
+    "category": "infrared",
+    "laser_power_w": [
+      5
+    ],
+    "work_area_mm": {
+      "width": 200,
+      "height": 200
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": null,
+    "key_features": [
+      "Single 5W UV laser (355±5nm, frequency-converted solid-state source) -- this is the ONLY laser on this machine (no diode option, unlike F2 Ultra)",
+      "'Cold processing': UV photons break molecular bonds rather than using heat, enabling engraving of heat-sensitive materials (glass, crystal, PE/PP/ABS/EVA/PET plastics) without melting or burning",
+      "Signature 3D sub-surface ('inner') engraving inside glass/crystal, plus fine surface engraving, embossing, and precision cutting (wood up to 15mm, acrylic up to 12mm, glass up to 1mm)",
+      "Dual 48MP cameras with intelligent autofocus (camera + laser rangefinder), 0.2mm positioning accuracy",
+      "Maximum processing speed 15,000mm/s; separate smaller 70x70mm inner-engraving work area (requires a different lens) alongside the main 200x200mm surface-engraving area",
+      "No metal cutting capability; limited/unstable color marking on metal, not comparable to MOPA fiber lasers",
+      "Sold in Class 1 (enclosed, no e-stop) and Class 4 (with key + emergency stop + inner-engraving pack) safety variants"
+    ],
+    "release_era": "2025",
+    "product_url": "https://www.xtool.com/products/xtool-f2-ultra-uv-5w-uv-laser-engraver",
+    "notes": "CATEGORY CAVEAT (important): this machine has only ONE laser (5W UV, 355nm) -- research (official xTool F-Series comparison blog stating the diode laser is on 'all F machine models except the F2 Ultra UV'; official spec table listing a single 'Working laser' row; a metal-cutting comparison grouping it with plain F2 as having no metal-cutting capability) contradicts an initial assumption that it might be a dual-laser 'hybrid' machine like F1 Ultra/F2 Ultra. None of the five allowed category values (diode/co2/fiber/infrared/hybrid) precisely describes 'single UV laser' -- 355nm UV is not literally infrared output. 'infrared' was chosen here as the least-inaccurate available label because UV solid-state lasers of this type are typically frequency-tripled from a 1064nm (infrared) fundamental source, giving it the closest lineage match among the enum options, and because 'hybrid' would misleadingly imply two laser types when the evidence strongly indicates only one. This is a genuine schema/enum gap -- the catalog maintainer should consider adding a 'uv' category value; do not treat this categorization as fully confident. Driver could not be confirmed (not in any official CH340/GD32/RNDIS driver-mapping document). Announced ~November 2025; priced at $4,599 per xTool's F-Series comparison table. max_pass_through_thickness_mm is null (enclosed desktop unit, max flat-object processing height 150mm, no pass-through mechanism).",
+    "sources": [
+      "https://www.xtool.com/products/xtool-f2-ultra-uv-5w-uv-laser-engraver",
+      "https://support.xtool.com/article/2359",
+      "https://support.xtool.com/article/2595",
+      "https://support.xtool.com/article/2870",
+      "https://www.xtool.com/blogs/buyer-guide/xtool-f-series-machine-choosing-guide",
+      "https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver"
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "xTool P2 (P2S) 55W Desktop CO2 Laser Cutter",
+    "category": "co2",
+    "laser_power_w": [
+      55
+    ],
+    "work_area_mm": {
+      "width": 600,
+      "height": 305
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi",
+      "Ethernet"
+    ],
+    "driver": "RNDIS",
+    "key_features": [
+      "Automatic pass-through (AutoPassthrough) via optional Automatic Conveyor Feeder, feeding material up to ~118in/3000mm long",
+      "Dual 16MP cameras (panoramic + close-range) with LiDAR autofocus",
+      "3D Curve engraving on curved/uneven surfaces",
+      "Riser base option (max workpiece height ~215mm with riser; 64-71mm without)",
+      "Built-in air assist + closed-loop water cooling (1.4L)",
+      "Class 4 (FDA certified) enclosed laser with lid lock + emergency stop"
+    ],
+    "release_era": "2023 (P2S refresh launched September 2024)",
+    "product_url": "https://www.xtool.com/products/xtool-p2-55w-co2-laser-cutter",
+    "notes": "P2 (original, April/June 2023) and P2S (refresh, September 2024) share an identical core spec sheet (55W CO2 tube, 600x305mm work area, 600mm/s max speed, 0.01mm precision); P2S adds a stronger 233 CFM exhaust fan (vs 145 CFM), dual-cylinder 200kPa air assist (vs single-cylinder 150kPa), and easier-maintenance parts. xTool now treats P2/P2S as one continuous listing (plain P2 units sold only as Refurbished) -- merged into one 'p2' catalog entry rather than two IDs since specs are functionally identical. The pass-through/AutoPassthrough feature is documented by xTool in terms of maximum material LENGTH (3000mm), not thickness -- xTool does not publish an explicit maximum-thickness figure for this feature, so max_pass_through_thickness_mm is null rather than invented; workpiece height (governed by the optional riser, up to ~215mm) is a related but distinct spec, noted in key_features. Max single-pass cut: 18mm black walnut / 20mm acrylic. Cannot cut metal or glass (engrave-only on coated metal, anodized aluminum/titanium, glass). Driver confirmed as RNDIS via multiple official support articles.",
+    "sources": [
+      "https://support.xtool.com/article/86",
+      "https://support.xtool.com/article/825",
+      "https://www.xtool.com/products/xtool-p2-55w-co2-laser-cutter",
+      "https://www.xtool.com/products/refurbished-xtool-p2-55w-desktop-co2-laser-cutter",
+      "https://www.xtool.com/blogs/news/introducing-xtool-p2",
+      "https://www.prnewswire.com/news-releases/xtool-celebrates-4th-anniversary-with-newly-launched-p2s-and-years-best-deals-302241179.html",
+      "https://support.xtool.com/article/1911",
+      "https://support.xtool.com/article/2410",
+      "https://xtool.zendesk.com/hc/en-us/articles/14189477580055-P2-Product-Introduction"
+    ]
+  },
+  {
+    "id": "p3",
+    "name": "xTool P3 80W Flagship CO2 Laser Cutter",
+    "category": "co2",
+    "laser_power_w": [
+      80
+    ],
+    "work_area_mm": {
+      "width": 915,
+      "height": 458
+    },
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB",
+      "Wi-Fi"
+    ],
+    "driver": null,
+    "key_features": [
+      "Automated Creation System (ACS) workflow: dual-camera (16MP SkyView panoramic + close-range + 2 side cameras) auto-positioning, LiDAR autofocus, AutoLift Z base (220mm standard clearance, 16kg max load)",
+      "Integrated Automatic/Intelligent Conveyor Feeder (quick-release, camera-guided) supporting material 22% wider and 85% thicker than P2's conveyor, though no exact max-thickness figure is published",
+      "Optional 5W infrared laser module for engraving metals/plastics (dual-laser capability)",
+      "Smart RA3 Rotary accessory with 360-degree LiDAR mapping and 3D preview",
+      "Class 1 certified laser safety (vs Class 4 on P2/P2S) with 8 IR flame sensors, temperature sensor, built-in 0.6L CO2 active fire-suppression cylinder",
+      "Built-in inverter water chiller; dual-cylinder air pump (200 kPa, 33% higher pressure than P2)",
+      "Max single-pass cut 20mm basswood / 25mm acrylic; 1200mm/s max speed (2x P2's 600mm/s)"
+    ],
+    "release_era": "2025 (announced August 28, 2025; CES 2026 Innovation Awards Honoree)",
+    "product_url": "https://www.xtool.com/products/xtool-p3-the-flagship-80w-co2-laser-cutters",
+    "notes": "Confirmed real, current flagship product as of this July 2026 research (live on xtool.com with active promotions). Starting price $6,999 standalone (early-bird pre-order was $5,999 during the Aug 28-Sept 10, 2025 launch window). Work area is ~2.3x P2S's per xTool's own comparison materials. First xTool CO2 machine able to (with the optional IR module) directly engrave certain plastics and metals like stainless steel and aluminum. Pass-through/conveyor capability is documented by xTool only in relative terms ('22% wider, 85% thicker than P2's conveyor') without a published absolute max-thickness-in-mm figure, so max_pass_through_thickness_mm is null rather than estimated. Driver could not be confirmed -- P3 postdates xTool's current RNDIS driver-compatibility list (which only names M1, F1, P1.5, P2/P2 Series) and no support article names P3's driver explicitly; left null rather than guessed.",
+    "sources": [
+      "https://www.xtool.com/products/xtool-p3-the-flagship-80w-co2-laser-cutters",
+      "https://www.xtool.com/pages/laser-machine-comparison",
+      "https://www.prnewswire.com/news-releases/the-future-of-co-lasers-is-here-xtool-launches-the-p3-laser-cutter-ahead-of-its-ifa-2025-debut-302542179.html",
+      "https://the-gadgeteer.com/2025/08/28/xtool-announces-p3-the-ultimate-co2-laser-workhorse-with-intelligent-automation-now-available-for-pre-order/",
+      "https://www.eurekamagazine.co.uk/content/news/meet-xtool-p3-ai-powered-precision-for-creators",
+      "https://www.prnewswire.co.uk/news-releases/xtool-defines-the-next-chapter-of-creative-manufacturing-at-ces-2026-302652727.html"
+    ]
+  },
+  {
+    "id": "metalfab",
+    "name": "xTool MetalFab Laser Welder",
+    "category": "fiber",
+    "laser_power_w": [
+      800,
+      1200
+    ],
+    "work_area_mm": null,
+    "max_pass_through_thickness_mm": null,
+    "supported_software": [
+      "XCS",
+      "Studio"
+    ],
+    "connectivity": [
+      "USB"
+    ],
+    "driver": null,
+    "key_features": [
+      "Handheld fiber laser welder (1080±10nm CW/MW) sold in 800W Starter and 1200W Pro variants",
+      "Welds up to 4mm (800W) or 5mm (1200W) stainless/carbon steel; SGS-tested per ISO 15614-1",
+      "Handheld cutting up to 3mm (800W) or 5mm (1200W) stainless/carbon steel; burr-free cuts up to 8mm (800W) or 10-12mm (1200W) carbon steel/galvanized sheet with gas assist",
+      "Handheld metal cleaning/rust removal and dross-free cutting modes",
+      "1200W variant includes a free-standing wire feeder (2-100mm/s, up to 15kg spool); 800W has a lighter built-in wire feeder (up to 5kg spool)",
+      "8-inch touchscreen controller with 108+ built-in welding parameters",
+      "550g detachable welding gun with 5-second quick-release; multi-layer safety system (e-stop, interlock, dual-trigger, laser-only-on-contact)",
+      "Optional companion xTool MetalFab CNC Cutter platform accessory: 610x610mm working area with side pass-through openings for near-unlimited length in one axis"
+    ],
+    "release_era": "2025",
+    "product_url": "https://www.xtool.com/products/xtool-metalfab-laser-welder",
+    "notes": "MetalFab is a handheld welding/cutting/cleaning tool, not a bed-based engraver, so the 'work_area_mm' concept (a fixed XY engraving bed) does not directly apply to the welder unit itself -- set to null. The optional companion 'xTool MetalFab CNC Cutter' platform accessory does have a defined bed (610x610mm, with pass-through side openings), noted in key_features since it belongs to the accessory rather than the welder itself. max_pass_through_thickness_mm left null since xTool does not publish a single pass-through-thickness spec for MetalFab (thickness capability is expressed per-material/per-mode in key_features instead). Driver could not be confirmed -- not listed under CH340/GD32/RNDIS in any official driver-mapping document. Connectivity confirmed as USB only (no Wi-Fi/Ethernet/TF card found in official docs). Launched ~April 2025.",
+    "sources": [
+      "https://www.xtool.com/products/xtool-metalfab-laser-welder",
+      "https://support.xtool.com/article/2354",
+      "https://support.xtool.com/article/2211",
+      "https://support.xtool.com/article/1760",
+      "https://support.xtool.com/article/1913",
+      "https://uk.xtool.com/products/xtool-metalfab-laser-welder-and-cnc-cutter",
+      "https://www.xtool.com/pages/metalfab-auto-repair"
+    ]
+  }
+]

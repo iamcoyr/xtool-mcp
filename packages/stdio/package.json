@@ -1,0 +1,30 @@
+{
+  "name": "xtool-mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Unofficial MCP server for xTool laser machines (local stdio). xTool knowledge base + .xcs design generation.",
+  "license": "MIT",
+  "bin": {
+    "xtool-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": ["xtool", "laser", "mcp", "model-context-protocol", "stdio"],
+  "scripts": {
+    "build": "tsup",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@xtool-mcp/core": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

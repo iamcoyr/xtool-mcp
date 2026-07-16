@@ -1,0 +1,26 @@
+name = "xtool-mcp"
+main = "src/index.ts"
+compatibility_date = "2025-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Workers AI — used to embed the search query (@cf/baai/bge-large-en-v1.5).
+[ai]
+binding = "AI"
+
+# Durable Object that hosts the MCP session (required by the agents SDK McpAgent).
+[[durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "XToolMcpAgent"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["XToolMcpAgent"]
+
+[observability]
+enabled = true
+
+# Optional: enable Vectorize for larger knowledge bases (search falls back to
+# an in-memory cosine over the shipped index / keyword search when absent).
+# [[vectorize]]
+# binding = "VECTORIZE"
+# index_name = "xtool-knowledge"

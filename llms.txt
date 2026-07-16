@@ -1,0 +1,52 @@
+# xtool-mcp
+
+> Unofficial Model Context Protocol (MCP) server and knowledge base for xTool laser cutters/engravers. Provides machine specs, material settings guidance, software help, troubleshooting, and programmatic .xcs / SVG design generation for use with any AI client.
+
+Important: Not affiliated with or endorsed by xTool. All settings are starting points — test on scrap, never cut PVC/vinyl, never run a laser unattended. When this project and xTool's official docs disagree, follow xTool.
+
+- Remote MCP endpoint (Streamable HTTP): https://xtool-mcp.doublexl.workers.dev/mcp
+- Local: `npx xtool-mcp` (stdio)
+
+## Machines
+- [xTool D1](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting): 5/10/20W diode laser; software XCS.
+- [xTool D1 Pro](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w): 5/10/20/40W diode laser; software XCS.
+- [xTool D1 Pro 2.0](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w): 5/10/20/40W diode laser; software XCS.
+- [xTool S1 Enclosed Diode Laser Cutter](https://www.xtool.com/products/xtool-s1-laser-cutter): 10/20/40W diode laser; software XCS/Studio.
+- [xTool M1](https://www.xtool.eu/products/xtool-m1-10w-smart-2-in-1-laser-engraver-and-vinyl-cutter): 5/10W hybrid laser; software XCS.
+- [xTool M1 Ultra](https://www.xtool.com/products/xtool-m1-ultra-the-worlds-first-4-in-1-craft-machine): 10/20W hybrid laser; software XCS/Studio.
+- [xTool F1](https://www.xtool.com/products/xtool-f1): 10W hybrid laser; software XCS/Studio.
+- [xTool F1 Ultra](https://www.xtool.com/products/xtool-f1-ultra-20w-fiber-diode-dual-laser-engraver): 20W hybrid laser; software XCS/Studio.
+- [xTool F2 Ultra](https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver): 40W hybrid laser; software Studio.
+- [xTool F2](https://www.xtool.com/products/xtool-f2-5w-ir-15w-diode-portable-dual-laser-engraver): 15W hybrid laser; software Studio.
+- [xTool F2 Ultra UV](https://www.xtool.com/products/xtool-f2-ultra-uv-5w-uv-laser-engraver): 5W infrared laser; software Studio.
+- [xTool P2 (P2S) 55W Desktop CO2 Laser Cutter](https://www.xtool.com/products/xtool-p2-55w-co2-laser-cutter): 55W co2 laser; software XCS/Studio.
+- [xTool P3 80W Flagship CO2 Laser Cutter](https://www.xtool.com/products/xtool-p3-the-flagship-80w-co2-laser-cutters): 80W co2 laser; software XCS/Studio.
+- [xTool MetalFab Laser Welder](https://www.xtool.com/products/xtool-metalfab-laser-welder): 800/1200W fiber laser; software XCS/Studio.
+
+## Guides
+- [xTool Creative Space (XCS) vs xTool Studio](https://support.xtool.com/learning-center): Overview of xTool's two control applications (XCS and xTool Studio) and the shared eight-step design-to-cut workflow.
+- [Laser Safety Essentials](https://support.xtool.com/article/354): Core xTool laser safety rules covering prohibited materials, ventilation, fire prevention, eye protection, air assist, and a pre-job checklist.
+
+## MCP tools
+- `list_machines`: List xTool machines with category, power, and work area.
+- `get_machine_specs`: Full spec for one machine by id/name.
+- `recommend_settings`: Power/speed/passes/DPI starting point for a material (with confidence + safety caveats).
+- `search_knowledge`: Search machines, guides, troubleshooting, safety, and material notes.
+- `troubleshoot`: Likely causes and fixes for a symptom.
+- `generate_test_grid`: Generate a .xcs/SVG material test grid (power vs speed).
+- `create_box`: Generate finger-joint box panels as .xcs/SVG.
+- `svg_to_xcs`: Convert an SVG into a cut-ready .xcs project.
+- `validate_xcs`: Check a .xcs file for common structural problems.
+
+## MCP prompts
+- `dial_in_settings`: Find safe settings for a material via data + a test grid.
+- `design_finger_joint_box`: Generate cut-ready panels for a box sized to your material.
+- `convert_svg_to_project`: Turn an SVG into an .xcs with the right operation/settings.
+- `troubleshoot_issue`: Diagnose a cutting/engraving/connection problem.
+- `plan_beginner_project`: Get a beginner project for your machine and material.
+- `material_safety_check`: Check whether a material is safe to laser.
+
+## Data
+- 14 machines, 58 material-settings rows, 15 troubleshooting entries.
+- Full detail: https://xtool-mcp.doublexl.workers.dev/llms-full.txt
+

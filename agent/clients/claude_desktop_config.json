@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "xtool": {
+      "command": "npx",
+      "args": ["-y", "xtool-mcp"]
+    }
+  }
+}

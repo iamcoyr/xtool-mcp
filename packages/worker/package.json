@@ -1,0 +1,24 @@
+{
+  "name": "@xtool-mcp/worker",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Remote xTool MCP server on Cloudflare Workers (Streamable HTTP + SSE) with Workers AI search and hosted llms.txt.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@xtool-mcp/core": "workspace:*",
+    "agents": "^0.0.80",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.90.0"
+  }
+}

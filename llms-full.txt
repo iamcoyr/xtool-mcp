@@ -1,0 +1,655 @@
+# xtool-mcp
+
+> Unofficial Model Context Protocol (MCP) server and knowledge base for xTool laser cutters/engravers. Provides machine specs, material settings guidance, software help, troubleshooting, and programmatic .xcs / SVG design generation for use with any AI client.
+
+Important: Not affiliated with or endorsed by xTool. All settings are starting points — test on scrap, never cut PVC/vinyl, never run a laser unattended. When this project and xTool's official docs disagree, follow xTool.
+
+- Remote MCP endpoint (Streamable HTTP): https://xtool-mcp.doublexl.workers.dev/mcp
+- Local: `npx xtool-mcp` (stdio)
+
+## Machines
+- [xTool D1](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting): 5/10/20W diode laser; software XCS.
+- [xTool D1 Pro](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w): 5/10/20/40W diode laser; software XCS.
+- [xTool D1 Pro 2.0](https://www.xtool.com/products/portable-diode-laserbox-d1-for-laser-engraving-laser-cutting-10w): 5/10/20/40W diode laser; software XCS.
+- [xTool S1 Enclosed Diode Laser Cutter](https://www.xtool.com/products/xtool-s1-laser-cutter): 10/20/40W diode laser; software XCS/Studio.
+- [xTool M1](https://www.xtool.eu/products/xtool-m1-10w-smart-2-in-1-laser-engraver-and-vinyl-cutter): 5/10W hybrid laser; software XCS.
+- [xTool M1 Ultra](https://www.xtool.com/products/xtool-m1-ultra-the-worlds-first-4-in-1-craft-machine): 10/20W hybrid laser; software XCS/Studio.
+- [xTool F1](https://www.xtool.com/products/xtool-f1): 10W hybrid laser; software XCS/Studio.
+- [xTool F1 Ultra](https://www.xtool.com/products/xtool-f1-ultra-20w-fiber-diode-dual-laser-engraver): 20W hybrid laser; software XCS/Studio.
+- [xTool F2 Ultra](https://www.xtool.com/products/xtool-f2-ultra-60w-mopa-40w-diode-dual-laser-engraver): 40W hybrid laser; software Studio.
+- [xTool F2](https://www.xtool.com/products/xtool-f2-5w-ir-15w-diode-portable-dual-laser-engraver): 15W hybrid laser; software Studio.
+- [xTool F2 Ultra UV](https://www.xtool.com/products/xtool-f2-ultra-uv-5w-uv-laser-engraver): 5W infrared laser; software Studio.
+- [xTool P2 (P2S) 55W Desktop CO2 Laser Cutter](https://www.xtool.com/products/xtool-p2-55w-co2-laser-cutter): 55W co2 laser; software XCS/Studio.
+- [xTool P3 80W Flagship CO2 Laser Cutter](https://www.xtool.com/products/xtool-p3-the-flagship-80w-co2-laser-cutters): 80W co2 laser; software XCS/Studio.
+- [xTool MetalFab Laser Welder](https://www.xtool.com/products/xtool-metalfab-laser-welder): 800/1200W fiber laser; software XCS/Studio.
+
+## Guides
+- [xTool Creative Space (XCS) vs xTool Studio](https://support.xtool.com/learning-center): Overview of xTool's two control applications (XCS and xTool Studio) and the shared eight-step design-to-cut workflow.
+- [Laser Safety Essentials](https://support.xtool.com/article/354): Core xTool laser safety rules covering prohibited materials, ventilation, fire prevention, eye protection, air assist, and a pre-job checklist.
+
+## MCP tools
+- `list_machines`: List xTool machines with category, power, and work area.
+- `get_machine_specs`: Full spec for one machine by id/name.
+- `recommend_settings`: Power/speed/passes/DPI starting point for a material (with confidence + safety caveats).
+- `search_knowledge`: Search machines, guides, troubleshooting, safety, and material notes.
+- `troubleshoot`: Likely causes and fixes for a symptom.
+- `generate_test_grid`: Generate a .xcs/SVG material test grid (power vs speed).
+- `create_box`: Generate finger-joint box panels as .xcs/SVG.
+- `svg_to_xcs`: Convert an SVG into a cut-ready .xcs project.
+- `validate_xcs`: Check a .xcs file for common structural problems.
+
+## MCP prompts
+- `dial_in_settings`: Find safe settings for a material via data + a test grid.
+- `design_finger_joint_box`: Generate cut-ready panels for a box sized to your material.
+- `convert_svg_to_project`: Turn an SVG into an .xcs with the right operation/settings.
+- `troubleshoot_issue`: Diagnose a cutting/engraving/connection problem.
+- `plan_beginner_project`: Get a beginner project for your machine and material.
+- `material_safety_check`: Check whether a material is safe to laser.
+
+## Data
+- 14 machines, 58 material-settings rows, 15 troubleshooting entries.
+- Full detail: https://xtool-mcp.doublexl.workers.dev/llms-full.txt
+
+
+---
+
+## Machine details
+### xTool D1 (`d1`)
+- Category: diode; power 5/10/20W; work area 432x406 mm.
+- Software: XCS; connectivity USB, Wi-Fi, TF card; driver CH340.
+- Features: Compressed spot laser technology (0.08mm spot size); Twin-beam laser design on 10W/20W modules for higher effective power; All-steel wheel and shaft drive for accuracy and durability; Interchangeable 5W/10W/20W diode laser modules (8-pin connector, not interchangeable with D1 Pro's 9-pin modules); Offline operation via TF card; Optional rotary attachment and risers for cylindrical/taller objects
+
+### xTool D1 Pro (`d1-pro`)
+- Category: diode; power 5/10/20/40W; work area 430x400 mm.
+- Software: XCS; connectivity USB, Wi-Fi, TF card; driver CH340.
+- Features: Dual-beam/compressed-spot diode technology for higher effective power per watt; Position limit switches, flame detector, and tilt/shake alarm; Interchangeable plug-and-play 5W/10W/20W/40W laser modules (9-pin connector), plus optional 2W 1064nm infrared add-on module; Up to 400mm/s routing speed; Stackable risers (up to 190mm+ height with 2 sets) for taller objects; 4-in-1 RA2 Pro rotary attachment support (roller, chuck, sphere, ring modes)
+
+### xTool D1 Pro 2.0 (`d1-pro-2`)
+- Category: diode; power 5/10/20/40W; work area 430x400 mm.
+- Software: XCS; connectivity USB, Wi-Fi, TF card; driver CH340.
+- Features: Adds a physical emergency-stop switch (new vs. original D1 Pro) triggered by flame, smoke, or tipping detection; Gyroscope-based tip/tilt sensor for auto-stop and alarm; Redesigned light shield to reduce smoke/dust contamination of laser lenses; Improved gantry structure for better rigidity/precision; Optional 40W dual-diode upgrade and optional 2W 1064nm infrared add-on module; 4-in-1 RA2 Pro rotary attachment and stackable risers; Up to 400mm/s routing speed and 0.01mm motion precision
+
+### xTool S1 Enclosed Diode Laser Cutter (`s1`)
+- Category: diode; power 10/20/40W; work area 498x319 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi; driver GD32.
+- Features: Enclosed Class 1 laser safety with lid-open auto-stop and 5-direction flame detection; Switchable 10W/20W/40W diode modules plus optional 2W 1064nm IR module for metal/plastic engraving; 600 mm/s max working speed with aerospace-grade aluminum frame rails; Pin-point absolute-coordinate positioning (no camera needed) for precise placement; Auto-focus system with electric Z-axis and multi-point 3D focus ranging; Optional Automatic Conveyor Feeder accessory (not a native pass-through) for feeding material up to ~3000mm long, ~14mm thick; optional riser base and RA2 Pro rotary attachment
+
+### xTool M1 (`m1`)
+- Category: hybrid; power 5/10W; work area 385x300 mm.
+- Software: XCS; connectivity USB, Wi-Fi; driver RNDIS.
+- Features: Combines a diode laser with a mechanical blade cutter (vinyl/paper/stickers) in one enclosure -- marketed by xTool as 'the world's first hybrid desktop laser cutter'; Switchable laser (engrave/cut) and blade-cut processing modes in the same footprint; 16MP smart camera for object positioning and material preview; 0.01mm engraving accuracy, 0.08x0.08mm laser spot size; Auto-focus laser module; optional riser base (engrave objects up to ~120mm tall) and rotary attachment support; Officially discontinued -- removed from xTool's regional online stores between April-August 2025
+
+### xTool M1 Ultra (`m1-ultra`)
+- Category: hybrid; power 10/20W; work area 300x300 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi; driver RNDIS.
+- Features: 'World's first 4-in-1 craft machine': diode laser engraving/cutting, mechanical blade cutting, inkjet printing (CMY, optional add-on), and pen drawing, all switchable in ~3 seconds; Four interchangeable blade types: fine-point (1.5mm), cutting/tapered (2.5mm), rotary (fabrics, optional), foil transfer tip (optional); 10W or 20W switchable diode laser module; 20W cuts up to 10mm basswood in one pass; No built-in camera -- uses patented Pin-point Positioning instead; 400 mm/s max engraving speed (vs 250mm/s on original M1); Supports 1,000+ materials across its 4 modes
+
+### xTool F1 (`f1`)
+- Category: hybrid; power 10W; work area 115x115 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi; driver RNDIS.
+- Features: Dual laser as standard equipment: 10W 455nm diode + 2W 1064nm infrared (fires one at a time, auto-switched, not simultaneous); Handheld/portable design (~4.6 kg, carry handle); Up to 4000 mm/s engraving speed via galvanometer system; Fully enclosed, laser-light-filtering cover with built-in fan/air purifier; Manual and auto-focus with live high-speed preview; Optional Slide Extension accessory expands work area to 115 x 400mm (not a built-in pass-through)
+
+### xTool F1 Ultra (`f1-ultra`)
+- Category: hybrid; power 20W; work area 220x220 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi; driver RNDIS.
+- Features: Dual laser as standard equipment: 20W 455nm diode + 20W 1064nm true fiber laser (not DPSS); Up to 10,000 mm/s max processing speed; Built-in camera above the work area for snapshot/live preview and positioning (megapixel spec not confirmed by official docs); Touchscreen controller with 7GB onboard storage for offline processing; Auto-focus with camera + manual two-dot alignment; Optional Auto Streamline Conveyor accessory (not built-in) extends processing area to 220x500mm, max material thickness ~81.5mm through the conveyor
+
+### xTool F2 Ultra (`f2-ultra`)
+- Category: hybrid; power 40W; work area 220x220 mm.
+- Software: Studio; connectivity USB, Wi-Fi; driver n/a.
+- Features: Dual laser as standard equipment: 40W 445nm blue diode + 60W 1064nm infrared MOPA fiber laser -- larger enclosed desktop unit, not handheld/portable like F1 series; MOPA (Master Oscillator Power Amplifier) fiber laser with adjustable pulse width (2-500ns) and frequency (30kHz-4000kHz) for color marking on metals; Up to 15,000 mm/s max processing speed; Dual 48MP cameras for smart preview/auto-positioning; Single-laser variant available ('F2 Ultra (Single)') with only the 60W MOPA fiber laser, no diode; 7GB onboard storage for offline processing; optional Auto Streamline Conveyor accessory extends processing area to 220x500mm; No longer compatible with LightBurn (dropped by xTool for data-security reasons); Studio-only, not compatible with legacy XCS
+
+### xTool F2 (`f2`)
+- Category: hybrid; power 15W; work area 115x115 mm.
+- Software: Studio; connectivity USB, Wi-Fi; driver n/a.
+- Features: Dual laser as standard equipment: 15W blue diode (445±15nm, non-metals) + 5W infrared (1064±5nm, metal marking, average power figures); Built-in 50MP autofocus camera with live 1:1 workspace preview, visual alignment, one-click auto-fill, batch processing; Engraving/cutting speed up to 6,000mm/s; Standard work area 115x115mm; expandable to 115x400mm with optional Slide Extension accessory; Maximum processing height 120mm; Successor to F1; starts at $1,499 (US); works exclusively with xTool Studio -- LightBurn support removed for data-security reasons; Supports curved-surface engraving, relief/embossment, and color engraving on stainless steel/titanium/copper via the IR laser
+
+### xTool F2 Ultra UV (`f2-ultra-uv`)
+- Category: infrared; power 5W; work area 200x200 mm.
+- Software: Studio; connectivity USB, Wi-Fi; driver n/a.
+- Features: Single 5W UV laser (355±5nm, frequency-converted solid-state source) -- this is the ONLY laser on this machine (no diode option, unlike F2 Ultra); 'Cold processing': UV photons break molecular bonds rather than using heat, enabling engraving of heat-sensitive materials (glass, crystal, PE/PP/ABS/EVA/PET plastics) without melting or burning; Signature 3D sub-surface ('inner') engraving inside glass/crystal, plus fine surface engraving, embossing, and precision cutting (wood up to 15mm, acrylic up to 12mm, glass up to 1mm); Dual 48MP cameras with intelligent autofocus (camera + laser rangefinder), 0.2mm positioning accuracy; Maximum processing speed 15,000mm/s; separate smaller 70x70mm inner-engraving work area (requires a different lens) alongside the main 200x200mm surface-engraving area; No metal cutting capability; limited/unstable color marking on metal, not comparable to MOPA fiber lasers; Sold in Class 1 (enclosed, no e-stop) and Class 4 (with key + emergency stop + inner-engraving pack) safety variants
+
+### xTool P2 (P2S) 55W Desktop CO2 Laser Cutter (`p2`)
+- Category: co2; power 55W; work area 600x305 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi, Ethernet; driver RNDIS.
+- Features: Automatic pass-through (AutoPassthrough) via optional Automatic Conveyor Feeder, feeding material up to ~118in/3000mm long; Dual 16MP cameras (panoramic + close-range) with LiDAR autofocus; 3D Curve engraving on curved/uneven surfaces; Riser base option (max workpiece height ~215mm with riser; 64-71mm without); Built-in air assist + closed-loop water cooling (1.4L); Class 4 (FDA certified) enclosed laser with lid lock + emergency stop
+
+### xTool P3 80W Flagship CO2 Laser Cutter (`p3`)
+- Category: co2; power 80W; work area 915x458 mm.
+- Software: XCS, Studio; connectivity USB, Wi-Fi; driver n/a.
+- Features: Automated Creation System (ACS) workflow: dual-camera (16MP SkyView panoramic + close-range + 2 side cameras) auto-positioning, LiDAR autofocus, AutoLift Z base (220mm standard clearance, 16kg max load); Integrated Automatic/Intelligent Conveyor Feeder (quick-release, camera-guided) supporting material 22% wider and 85% thicker than P2's conveyor, though no exact max-thickness figure is published; Optional 5W infrared laser module for engraving metals/plastics (dual-laser capability); Smart RA3 Rotary accessory with 360-degree LiDAR mapping and 3D preview; Class 1 certified laser safety (vs Class 4 on P2/P2S) with 8 IR flame sensors, temperature sensor, built-in 0.6L CO2 active fire-suppression cylinder; Built-in inverter water chiller; dual-cylinder air pump (200 kPa, 33% higher pressure than P2); Max single-pass cut 20mm basswood / 25mm acrylic; 1200mm/s max speed (2x P2's 600mm/s)
+
+### xTool MetalFab Laser Welder (`metalfab`)
+- Category: fiber; power 800/1200W; work area n/a (no fixed bed).
+- Software: XCS, Studio; connectivity USB; driver n/a.
+- Features: Handheld fiber laser welder (1080±10nm CW/MW) sold in 800W Starter and 1200W Pro variants; Welds up to 4mm (800W) or 5mm (1200W) stainless/carbon steel; SGS-tested per ISO 15614-1; Handheld cutting up to 3mm (800W) or 5mm (1200W) stainless/carbon steel; burr-free cuts up to 8mm (800W) or 10-12mm (1200W) carbon steel/galvanized sheet with gas assist; Handheld metal cleaning/rust removal and dross-free cutting modes; 1200W variant includes a free-standing wire feeder (2-100mm/s, up to 15kg spool); 800W has a lighter built-in wire feeder (up to 5kg spool); 8-inch touchscreen controller with 108+ built-in welding parameters; 550g detachable welding gun with 5-second quick-release; multi-layer safety system (e-stop, interlock, dual-trigger, laser-only-on-contact); Optional companion xTool MetalFab CNC Cutter platform accessory: 610x610mm working area with side pass-through openings for near-unlimited length in one axis
+
+## Material settings (starting points — verify on scrap)
+machine | laser | material | mm | op | power% | speed mm/s | passes | dpi | confidence
+--- | --- | --- | --- | --- | --- | --- | --- | --- | ---
+D1 Pro 20W | 20 | Basswood Plywood | 3 | cut | 100 | 8 | 1 |  | high
+D1 Pro 20W | 20 | Basswood Plywood | 3 | engrave | 80 | 60 | 1 |  | high
+D1 Pro 10W | 10 | Basswood Plywood | 3 | cut | 100 | 3 | 4 |  | medium
+D1 Pro 20W | 20 | Basswood Plywood | 5 | cut | 100 | 5 | 2 |  | medium
+D1 Pro 20W | 20 | Basswood Plywood | 5 | engrave | 60 | 100 | 1 | 254 | low
+S1 20W | 20 | Basswood Plywood | 3 | cut | 100 | 6 | 2 |  | medium
+S1 40W | 40 | Basswood Plywood | 5 | cut | 100 | 10 | 1 |  | medium
+S1 40W | 40 | Basswood Plywood | 5 | engrave | 50 | 150 | 1 | 254 | low
+P2 55W | 55 | Basswood Plywood | 3 | cut | 40 | 20 | 1 |  | medium
+P2 55W | 55 | Basswood Plywood | 6 | cut | 60 | 12 | 1 |  | medium
+P2 55W | 55 | Basswood Plywood | 6 | engrave | 20 | 300 | 1 | 254 | medium
+D1 Pro 20W | 20 | Pine Plywood | 3 | cut | 100 | 4 | 2 |  | medium
+P2 55W | 55 | Cherry Plywood | 3 | cut | 45 | 18 | 1 |  | low
+D1 Pro 20W | 20 | Walnut Plywood | 3 | engrave | 70 | 80 | 1 | 254 | low
+D1 Pro 20W | 20 | Acrylic (Cast, Black, Opaque) | 3 | cut | 100 | 5 | 1 |  | high
+D1 Pro 20W | 20 | Acrylic (Extruded, Black, Opaque) | 3 | cut | 100 | 5 | 3 |  | high
+D1 Pro 20W | 20 | Acrylic (Cast, Black, Opaque) | 3 | engrave | 40 | 50 | 1 | 254 | high
+S1 40W | 40 | Acrylic (Extruded, Clear/Transparent) | 3 | cut | 60 | 15 | 1 |  | low
+P2 55W | 55 | Acrylic (Extruded, Clear/Transparent) | 3 | cut | 30 | 20 | 1 |  | medium
+P2 55W | 55 | Acrylic (Extruded, Clear/Transparent) | 3 | engrave | 15 | 150 | 1 | 254 | low
+D1 Pro 40W | 40 | Acrylic (Cast, Black) | 3 | score | 25 | 50 | 1 |  | high
+D1 Pro 20W | 20 | Cardboard (Corrugated) | 4 | cut | 100 | 25 | 1 |  | medium
+D1 Pro 20W | 20 | Cardboard (Corrugated) | 4 | engrave | 22 | 260 | 1 | 254 | medium
+S1 20W | 20 | Cardboard (Corrugated) | 3 | cut | 90 | 15 | 1 |  | low
+D1 Pro 20W | 20 | Genuine Leather (Veg-Tan, ~3mm) | 3 | cut | 100 | 4 | 3 |  | medium
+D1 Pro 20W | 20 | Genuine Leather (Veg-Tan, ~3mm) | 3 | engrave | 40 | 150 | 1 | 254 | low
+S1 40W | 40 | Genuine Leather | 2 | engrave | 30 | 200 | 1 | 254 | medium
+S1 20W | 20 | Genuine Leather | 2 | cut | 100 | 6 | 2 |  | low
+P2 55W | 55 | Genuine Leather | 3 | cut | 25 | 15 | 1 |  | medium
+D1 Pro 20W | 20 | Kraft Paper | 0.23 | cut | 12 | 3 | 1 |  | high
+D1 Pro 20W | 20 | Kraft Paper | 0.23 | engrave | 1 | 330 | 1 | 254 | high
+D1 Pro 40W | 40 | Kraft Paper | 0.23 | cut | 60 | 60 | 1 |  | high
+D1 Pro 40W | 40 | Kraft Paper | 0.23 | engrave | 8 | 80 | 1 | 254 | high
+S1 40W | 40 | Kraft Paper | 0.3 | cut | 40 | 40 | 1 |  | low
+P2 55W | 55 | Kraft Paper | 0.3 | cut | 10 | 100 | 1 |  | low
+D1 Pro 20W | 20 | Slate (Coaster) | 7 | engrave | 90 | 36 | 1 | 400 | low
+D1 Pro 40W | 40 | Rock/Slate Coaster | 7 | score | 10 | 25 | 1 |  | high
+D1 Pro 40W | 40 | Rock/Slate Coaster | 7 | engrave | 15 | 120 | 1 | 254 | high
+M1 Ultra | 10 | Slate (Blank Rectangular Coaster) |  | engrave | 35 | 130 | 1 |  | medium
+F1 (base) | 10 | Stainless Steel 304 (Mark) |  | engrave | 90 | 1000 | 1 |  | low
+F1 (base) | 2 | Anodized Aluminum (Mark) |  | engrave | 50 | 1750 | 1 |  | low
+F1 Ultra | 20 | Stainless Steel 304 (Surface Mark) |  | engrave | 70 | 1000 | 1 |  | low
+F1 Ultra | 20 | Anodized Aluminum (Anodize Removal Mark) |  | engrave | 50 | 1500 | 1 |  | low
+F1 (base) | 10 | Basswood (Bitmap Engrave, photo/grayscale) | 3 | engrave | 85 |  | 1 | 550 | high
+F1 (base) | 10 | Acrylic (Black, 3mm) | 3 | cut | 100 | 2 | 1 |  | high
+F1 (base) | 2 | Acrylic (Black, 3mm, Score) | 3 | score | 80 | 60 | 1 |  | high
+F1 (base) | 2 | Acrylic (Black, 3mm, Vector Engrave) | 3 | engrave | 90 | 200 | 1 |  | high
+M1 5W | 5 | Basswood Plywood | 3 | cut | 100 | 3 | 1 |  | high
+M1 10W | 10 | Basswood Plywood | 3 | cut | 100 | 4 | 1 |  | high
+M1 10W | 10 | Basswood Plywood | 3 | engrave | 70 | 175 | 1 | 254 | high
+M1 10W | 10 | PU Heat Transfer Vinyl (HTV) | 0.2 | cut | 0 | 80 | 1 |  | high
+M1 10W | 10 | Self-Adhesive Vinyl | 0.3 | cut | 0 | 80 | 1 |  | high
+M1 5W | 5 | Stainless Steel Necklace/Tag (thin, ~1mm) | 1 | engrave | 100 | 15 | 1 | 254 | high
+P2 55W | 55 | Wood (max capability reference, solid) | 18 | cut | 100 | 3 | 2 |  | medium
+P2 55W | 55 | Plywood (fire-risk threshold reference) | 12 | cut | 100 | 4 | 2 |  | high
+D1 Pro 20W | 20 | MDF | 3 | cut | 100 | 6 | 2 |  | medium
+D1 Pro 20W | 20 | Cork Sheet | 3 | engrave | 15 | 50 | 1 | 254 | high
+D1 Pro 40W | 40 | Cork Desk Pad | 2 | engrave | 8 | 160 | 1 | 203 | high
+
+## Troubleshooting
+### Laser is not cutting all the way through the material
+- Causes: Power too low; Speed too high; Insufficient passes; Incorrect focus height; Material is thicker or denser than the current settings assume
+- Fixes: Run a small test cut on scrap before committing to the full job; Re-check focus distance for the actual material thickness; Increase power and/or reduce speed; Add an additional pass
+
+### Engraving comes out too light / faint
+- Causes: Power too low for the material; Speed too high; Focus slightly off; On bitmap engraves, Dot Duration set too short on fiber/IR jobs
+- Fixes: Run a Material Test Array to dial in optimal values rather than guessing; Re-focus; Increase power percentage and decrease speed; For bitmap/fiber jobs, increase Dot Duration (recommended above 100µs)
+
+### Engraving is too dark, scorched, or shows excessive charring
+- Causes: Power too high or speed too low for the material; Too many passes; Material carbonizes/burns at the current energy density (especially MDF and some plywoods)
+- Fixes: Reduce power and/or increase speed; Reduce pass count; For MDF specifically, favor a higher-speed, multi-pass approach over a single very-slow, high-power pass to reduce charring
+
+### Focus issues — engraving/cutting is blurry, inconsistent, or the cut fails only in parts of the design
+- Causes: Manual focus tool not used correctly; Material surface is not flat/level; Auto-focus (on supported machines) failed to register true material height (e.g., on reflective, transparent, or unusually textured material)
+- Fixes: Re-level the material and re-run focus; For manual-focus machines, use the physical focus tool/gauge exactly per the material's actual thickness at the point being processed; For auto-focus machines, retry the auto-focus routine or fall back to manual focus if auto-focus repeatedly fails on a difficult material
+
+### Machine will not connect over USB
+- Causes: Faulty/incompatible USB cable; Driver not installed; Wrong USB port; The software wasn't fully closed/reopened after a previous failed connection attempt
+- Fixes: Use the cable that shipped with the machine (or a verified data-capable replacement, not a charge-only cable); Try a different USB port (avoid unpowered hubs); Reinstall/update USB drivers if prompted; Fully quit and relaunch XCS/Studio; Power-cycle the machine
+
+### Machine will not connect over Wi-Fi
+- Causes: Machine and controlling device are on different Wi-Fi networks/bands (many xTool machines only support 2.4GHz, not 5GHz); Incorrect Wi-Fi password entered during setup; Router firewall/AP isolation blocking local device discovery
+- Fixes: Confirm the router network being joined is 2.4GHz (create a dedicated 2.4GHz SSID if the router only broadcasts a combined/5GHz-preferred network); Re-run the in-app Wi-Fi setup wizard and re-enter the password carefully; Temporarily disable AP/client isolation on the router if enabled; Ensure the controlling device is on the same network/subnet as the machine
+
+### Fire, flare-ups, or flame during processing
+- Causes: Excess power/too-slow speed causing sustained combustion rather than clean ablation; Processing a prohibited/flammable material; Processing material thicker than the machine's safe rated maximum (e.g., P2 plywood over 12mm); Leaving the machine unattended while it smolders after a job
+- Fixes: Immediately stop the job; If flame is visible, use an appropriate fire extinguisher (do not use water on an electrical/laser fire) or smother small flare-ups; Never leave a running laser unattended; Never exceed official maximum-thickness guidance for a given material/machine; Reduce power/increase speed for future runs of the same material; Ensure ventilation/air assist is functioning to blow combustion byproducts away from the cut kerf
+
+### Misalignment between the design preview/frame and the actual cut/engrave position
+- Causes: Camera calibration drift (on camera-equipped machines like S1); Material moved after framing but before processing; Material is not perfectly flat/seated in the work area
+- Fixes: Avoid touching/shifting material between framing and processing; Re-frame immediately before processing rather than relying on an earlier frame; Use a honeycomb panel, riser base, or magnets/pins to secure material flat and stationary; Re-run camera calibration per the machine's calibration routine if using camera-assisted positioning
+
+### Material scorching / burn marks around the edges of a cut or engrave
+- Causes: Excess power; Insufficient air assist; Residual heat buildup from slow speed/multiple passes without adequate cooling between passes
+- Fixes: Verify air assist is enabled and the nozzle/airflow path is clear; Reduce power and/or increase speed; On multi-pass jobs, allow brief cooling if scorching is severe; For wood specifically, masking tape (blue painter's tape) over the surface can reduce visible edge scorching on engraves
+
+### Software freezes, crashes, or becomes unresponsive during a job
+- Causes: Outdated software version; Corrupted project file; Insufficient system resources (very large bitmap images); A USB/Wi-Fi communication drop mid-job that the UI doesn't recover from gracefully
+- Fixes: Save work frequently as separate project files to avoid losing progress to a crash; Update to the latest XCS or Studio version; Reduce imported image resolution/file size where possible; Restart the software and machine before retrying
+
+### Machine detects an error code and halts (e.g., lid open, protection triggered)
+- Causes: Safety interlock triggered (lid/cover opened mid-job on enclosed machines like S1); A specific protection error code such as S1's fire-risk M53 F5 (small design area + high power + low speed)
+- Fixes: Close the lid/cover fully and resume/restart the job; If a specific error code appears, look it up in the machine's error-code reference article and follow the documented remedy; For M53 F5 specifically: reduce power, increase speed, or enlarge the design's bounding area to fall outside the risk threshold
+
+### Colors/vector layers imported from a design file are misassigned to the wrong processing type
+- Causes: The design file's original color-to-layer mapping doesn't match the software's expected color convention (each distinct stroke/fill color typically maps to a separate processing layer)
+- Fixes: Before import, standardize distinct colors in the source vector file for each intended processing type (e.g., red stroke = cut, blue stroke = score, black fill = engrave); After import, manually reassign any mismapped layer's processing type in the software's layer panel
+
+### Bitmap/photo engrave looks banded, streaky, or has visible line artifacts
+- Causes: DPI too low for the level of detail attempted; Wrong bitmap mode selected for the laser type in use (e.g., using plain grayscale mode on a fiber/IR job instead of Jarvis); Bi-directional scanning introducing slight registration offset on a particular machine/material combination
+- Fixes: Use the bitmap mode recommended for the laser type (Jarvis for infrared/fiber, grayscale for blue diode); Increase DPI for finer detail; Switch to uni-directional scanning if banding persists
+
+### Cutting/engraving works fine on one material but fails or looks wrong on a visually similar one
+- Causes: Materials that look alike (e.g., cast vs. extruded acrylic, or different plywood species/adhesive types) can have very different laser absorption properties; Settings tuned for one will not transfer directly to the other
+- Fixes: Always run a Material Test Array or small scrap test when switching to a new/different material batch, even if it looks similar to a previously-used one; Consult the Material Settings Library for the specific material sub-type rather than assuming a generic category setting will work
+
+### Machine won't power on, or powers on but the laser module doesn't fire at all
+- Causes: Power supply/adapter fault; Safety interlock not satisfied (lid open, key-lock switch off on machines that have one); The laser module itself is disconnected/faulty
+- Fixes: Confirm the power adapter is fully seated and the outlet is live; Ensure all lid/cover interlocks are closed and any physical key-switch is in the "on"/unlocked position; Check the laser module's cable connection for damage or looseness; If the module still doesn't fire after these checks, contact xTool support for a possible hardware fault
+
+## xTool Creative Space (XCS) vs xTool Studio
+# xTool Creative Space (XCS) vs xTool Studio
+
+## 1. XCS vs. xTool Studio
+
+xTool has two distinct desktop/mobile applications. They are **separate installable applications, not a rebrand of one another** — xTool Studio is the successor product, and XCS has been frozen at its final version.
+
+### xTool Creative Space (XCS)
+
+- **What it is**: xTool's original laser/craft-cutting control software, used to import designs, set cut/engrave/score parameters, frame jobs, and send them to the machine.
+- **Status**: Frozen at its final version, **XCS Desktop V2.7 (specifically V2.7.22, released around mid-to-late June 2025)**. No further feature development is planned for XCS — new features and machine support are going into xTool Studio instead.
+- **Which machines use it**: All legacy and current-generation xTool machines were originally designed around XCS, including D1 Pro, S1, P2, M1/M1 Ultra, and F1/F1 Ultra. Older machines may continue to rely on XCS indefinitely since Studio compatibility rolled out gradually by machine.
+- **Native file format**: `.xcs` — xTool's proprietary project file format, storing design layers, processing-type assignments (cut/score/engrave), and per-layer parameters.
+- **Platforms**: Windows and macOS desktop; iOS and Android mobile companion apps also exist for basic job sending/monitoring.
+- **Import formats**: Common vector formats (SVG, DXF), common raster/bitmap formats (JPG, PNG, BMP), and PDF.
+- **Export formats**: `.xcs` project files; processed jobs are sent directly to the machine rather than exported to a universal machine format (no G-code export in the consumer UI).
+
+### xTool Studio
+
+- **What it is**: xTool's next-generation design and machine-control software, intended to eventually replace XCS across the product line. Positioned as a more modern, actively developed application with expanded design tools and a cleaner processing-parameter UI.
+- **Status**: Launched as **Studio Desktop V1.0 on September 4, 2025**; as of this writing it has progressed well past **V1.7.30**, which introduced a new native project format.
+- **Which machines use it**: Newer/actively-supported machines are prioritized for Studio support first; official guidance is to check the specific machine's support page to confirm Studio compatibility, since rollout has been staged rather than simultaneous across the whole product line. D1 Pro, S1, P2, M1/M1 Ultra, and F1/F1 Ultra are all Studio-compatible as of current versions.
+- **Native file formats**:
+  - `.xcs` — Studio can still open/save the legacy XCS format for cross-compatibility with older projects and with users still on XCS.
+  - `.xs` — a **new native format introduced in Studio V1.7.30**. Important: **`.xs` files are NOT backward-compatible** with XCS or with Studio versions prior to 1.7 — a project saved as `.xs` in a current Studio version cannot be opened in XCS or in an older Studio release.
+- **Platforms**: Windows and macOS desktop; mobile app support following a similar staged rollout to machine support.
+- **Import formats**: Same baseline as XCS (SVG, DXF, JPG, PNG, BMP, PDF), with Studio adding broader/refined vector-format handling as part of its expanded design toolset.
+- **Export formats**: `.xcs` and `.xs` project files; direct-to-machine job sending as with XCS.
+
+### Key Workflow Differences
+
+- Studio reorganizes the processing-parameter panel and adds a **Polygon framing mode** in addition to the Rect and Outline framing modes both applications share (see Framing below).
+- Studio's design toolset is more expansive (more native vector editing tools) versus XCS's comparatively minimal design surface, which historically leaned on imported designs from external vector editors.
+- Users migrating projects from XCS to Studio should save/export as `.xcs` if they need the file to remain readable by anyone still on XCS or on Studio versions before 1.7; only use `.xs` once fully committed to the newer format.
+
+> Note: exact current version numbers for XCS and Studio should be reconfirmed against support.xtool.com at time of reading, since both are (or were, in XCS's case) actively versioned — the numbers above reflect the most recently confirmed releases at time of research.
+
+## 2. Core Processing Workflow
+
+Both XCS and xTool Studio follow the same fundamental job pipeline, though the UI details differ:
+
+1. **Import or design** — Bring in a design via file import (SVG, DXF, JPG, PNG, BMP, PDF) or create one natively with the software's built-in design tools (text, shapes, vector drawing).
+2. **Arrange on the virtual canvas** — Position, scale, and rotate design elements to match the intended physical placement on the material inside the machine's work area.
+3. **Assign a processing type per layer/object** — Each vector or bitmap object is assigned one of the core processing types:
+   - **Cut**: vector-only; cuts completely through the material along the path.
+   - **Score**: vector-only; a lighter, single-pass outline scribe/etch that does *not* cut through — used for crease lines, half-cuts, or decorative outline marks.
+   - **Engrave**: comes in two sub-modes —
+     - *Vector/fill engrave*: traces and fills vector shapes at engrave-level power.
+     - *Bitmap/raster (grayscale) engrave*: rasterizes a bitmap image line-by-line, varying power or dot duration by pixel brightness to reproduce photos/grayscale artwork.
+4. **Set processing parameters** — For the assigned processing type, configure:
+   - **Power (%)** — laser output as a percentage of the module's rated wattage.
+   - **Speed (mm/s)** — carriage travel speed during processing.
+   - **Passes** — number of times the toolpath repeats (default 1; up to 10 for engrave operations, commonly 2-4 for cuts through thicker material).
+   - **Bitmap-only parameters** (for raster/grayscale engrave):
+     - **DPI** (dots per inch; effective range roughly 1–1270 in-app; 100 lines/cm ≈ 254 DPI).
+     - **Dot Duration** (µs) — used primarily on fiber/IR modules (e.g., F1's IR laser); recommended above 100µs, typically 100–500µs.
+     - **Bitmap mode** — one of several dithering/halftone algorithms (7 modes available, including Jarvis); Jarvis is recommended for infrared/fiber engraving, while plain grayscale is recommended for blue-diode engraving.
+     - **Scan direction** — bi-directional (default, faster) or uni-directional (slower, can reduce banding artifacts on some materials).
+5. **Framing** — Before firing the laser for real, run a **Frame** pass: the machine traces the job's bounding boundary at low power (or with a positioning light/camera on camera-equipped machines) so the user can confirm placement on the physical material. Framing modes:
+   - **Rect** — traces the rectangular bounding box of the whole job.
+   - **Outline** — traces the actual outline of the design content instead of just a rectangle.
+   - **Polygon** (Studio only) — traces an arbitrary polygon boundary, useful for irregular material shapes/scraps.
+6. **Focus the laser** — Set physical focus (manual focus tool, motorized auto-focus on supported machines, or camera-assisted focus) appropriate to material thickness before processing; incorrect focus is one of the most common causes of poor cut/engrave quality.
+7. **Process the job** — Start the actual cut/score/engrave run. The software streams processing instructions to the machine over USB or Wi-Fi as the job executes.
+8. **Monitor and retrieve** — Supervise the run (never leave a running laser unattended), then remove the finished material once the job completes and the laser has fully stopped.
+
+## Laser Safety Essentials
+# xTool Laser Safety Essentials
+
+Sources: support.xtool.com/learning-center, xtool.com. Compiled as part of an open-source xTool knowledge base. Every claim below is sourced to a specific official article with a verbatim quote where possible. **This document is a research aggregation, not a substitute for your machine's printed manual or xTool's official safety guide — always read the manual for your specific model before operating it.**
+
+---
+
+## 1. Forbidden and Dangerous Materials (read this section first)
+
+### PVC / Vinyl / Chlorine-Containing Materials — NEVER cut or engrave these
+
+This is the single most important safety rule across all xTool machines. PVC (polyvinyl chloride), vinyl, pleather/artificial leather, and any other chlorine/chloride-containing material release **toxic chlorine gas** when lased, and the resulting hydrochloric acid/corrosive vapor **damages the machine's optics and motion system**.
+
+Verbatim, from the official **Safety Guide for xTool D1 Laser Cutting & Engraving** (support.xtool.com/article/354):
+
+> "Do not engrave or cut any material that contains PVC or vinyl (plastic materials are not recommended). These materials (and other materials containing chlorine/chloride) may generate corrosive vapor that is extremely harmful to human bodies and may cause damage to the machine. Any damage caused by engraving or cutting any material containing PVC or vinyl is not covered by Makeblock's warranty."
+
+The same article's material-hazard table states:
+
+> "PVC (Polyvinyl Chloride) /vinyl/pleather/artificial leather — Emits toxic pure chlorine gas with strong and pungent odors! Never cut this material as it causes the machines to corrode, damages optical devices and the motion control system."
+
+Source: https://support.xtool.com/article/354
+
+The **xTool M2 Material Cheat Sheet** (support.xtool.com/article/3538) reiterates this for a current-generation machine and flags a common consumer mix-up:
+
+> "PVC-containing material must never be lasered... ⛔ Don't laser these: These can release toxic fumes or damage the machine — do not cut or engrave them: PVC / chlorine-containing vinyl materials... One common mix-up to flag: printable adhesive vinyl is not the same as PVC you can laser-cut. When buying 'vinyl' materials, look for a PVC-free label — and if you're not sure what it's made of, keep it out of the laser."
+
+Source: https://support.xtool.com/article/3538
+
+The **xTool F2 FAQ** (support.xtool.com/article/2818) confirms this applies to current-generation machines too:
+
+> "Avoid processing the following materials with xTool F2: PVC and other chlorinated polymers (as they release toxic chlorine gas)..."
+
+Source: https://support.xtool.com/article/2818
+
+**This is exactly why xTool's hybrid craft machines (M1, M1 Ultra, M2) include a physical cutting blade module** — so that vinyl/HTV/PVC-based craft materials can be cut mechanically instead of with the laser. Always use Blade Cut mode for vinyl-type materials on machines that have it; never attempt to laser-cut vinyl even if the software allows you to select it.
+
+### Official "Not Suitable for Processing" Material List
+
+The official **xTool P2 FAQ** (support.xtool.com/article/825) gives xTool's canonical prohibited-materials list:
+
+> "What materials can't I process with xTool P2? Do not use xTool P2 to process leather containing chromium, polyvinyl chloride, or polyvinyl butyral; and polytetrafluoroethylene, beryllium oxide, and any materials containing halogens, epoxy, or phenolic resins."
+
+Source: https://support.xtool.com/article/825
+
+The equivalent legacy list (support.xtool.com/article/253 and its zendesk mirror, covering the Laserbox product line but describing the same underlying laser-material chemistry hazards) adds **carbon fiber** explicitly and explains the mechanism:
+
+> "Chromium (VI) contains leather and artificial leather, such as leather goods, and leather products. Carbon fibers (carbon), e.g., carbon fiber products: caps, plates. Polyvinyl chloride (PVC), e.g., plastic products. Polyvinyl butyral (PVB), e.g., laminated glass, film. Polytetrafluoroethylene (PTFE / Teflon), e.g., plastic products. Beryllium oxide, e.g., high conductivity oxide ceramics, beryllium alloys, etc. And materials containing halogens (fluorine, chlorine, bromine, iodine, and astatine), epoxy resins, or phenolic resins. If laser engraving or laser cutting processes are performed on the above materials, dust or gases may be generated that may be hazardous to the laser equipment operator or the laser machine function."
+
+Source: https://support.xtool.com/article/253
+
+Summary list of officially prohibited/not-recommended materials:
+
+| Material | Why it's dangerous |
+|---|---|
+| PVC / vinyl / pleather / artificial leather | Releases toxic chlorine gas; corrodes machine and damages optics |
+| Chromium-containing leather (chromium-tanned) | Hazardous dust/gas on laser processing |
+| Polyvinyl butyral (PVB) — e.g. laminated glass, film | Hazardous dust/gas on laser processing |
+| Polytetrafluoroethylene (PTFE / Teflon) | Hazardous dust/gas on laser processing |
+| Beryllium oxide (ceramics, beryllium alloys) | Hazardous dust/gas on laser processing |
+| Any halogen-containing material (fluorine, chlorine, bromine, iodine, astatine) | Hazardous dust/gas on laser processing |
+| Epoxy resins | Hazardous dust/gas on laser processing |
+| Phenolic resins | Hazardous dust/gas on laser processing |
+| Carbon fiber / coated carbon fiber | Emits noxious/harmful fumes |
+
+### Other Dangerous Materials (official warnings)
+
+The D1 Safety Guide's material-hazard table (support.xtool.com/article/354) gives verbatim warnings for several additional common craft materials:
+
+> "ABS — Exudes cyanide gas and tends to melt. ABS doesn't work well with a laser cutter as it is apt to melt rather than vaporize, and is likely to catch fire and leaves melted gooey deposits. Besides, ABS is not a good choice for engraving because it tends to melt."
+>
+> "HDPE — Melts and easily catches fire."
+>
+> "Polystyrene Foam — Melts and easily catches fire."
+>
+> "Polypropylene Foam — Melts and easily catches fire."
+>
+> "Polycarbonate/latex paint — Changes color and catches fire."
+>
+> "Coated Carbon Fiber — Emits noxious fumes."
+>
+> "Acrylic — Emits noxious fumes. For your information, most 450nm laser can pass through acrylic. Laser beams emitted by semiconductor laser devices such as xTool D1 and M1 range from 450nm to 460nm in wavelength, which means most laser beams pass through acrylic instead of being absorbed."
+
+Source: https://support.xtool.com/article/354
+
+The **F2 FAQ** (support.xtool.com/article/2818) adds fiberglass and glass/reflective-material cautions specific to current hardware:
+
+> "Avoid processing the following materials with xTool F2: ...Carbon fiber and fiberglass (as they emit harmful fumes); Polyethylene film or foam (as they melt easily and deliver poor quality); Bare glass or crystal (as they may easily crack; use black tape if necessary); Highly reflective or fluffy materials, such as cotton (as they may cause focus errors)."
+
+Source: https://support.xtool.com/article/2818
+
+The **M2 Material Cheat Sheet** (support.xtool.com/article/3538) separately flags **polycarbonate (PC)** and unknown-composition leather/foam:
+
+> "⛔ Don't laser these: ...Polycarbonate (PC); Leather or foam of unknown composition."
+
+Source: https://support.xtool.com/article/3538
+
+**General rule for any unknown material**: per the D1 Safety Guide:
+
+> "Do not engrave or cut any unknown materials. Vaporization/melting of many materials, which include but are not limited to PVC and polycarbonate, may release harmful smoke."
+
+Source: https://support.xtool.com/article/354
+
+If you don't know exactly what a material is made of (no manufacturer spec sheet or MSDS), treat it as unsafe until proven otherwise — the M2 sheet echoes this for foam specifically: "Must confirm the material is safe; PVC/EVA and similar need caution — check the MSDS first."
+
+### Reflective Materials — equipment damage risk
+
+> "Warning: Do not process reflective materials such as mirrors. It is extremely dangerous to get laser beams reflected, which also causes damage to laser devices."
+
+Source: https://support.xtool.com/article/354
+
+This extends to highly reflective metals like polished/mirror-finish stainless steel: reflected beam energy can damage a diode laser module (support.xtool.com/article/1716, F1-series material guidance). Always test a small area first and never operate the machine's lid/cover open when processing reflective stock.
+
+---
+
+## 2. Ventilation and Fume Extraction
+
+Laser cutting/engraving vaporizes material and produces smoke, fumes, and fine particulates regardless of how "safe" the material is — proper ventilation is required for every job, not just risky materials.
+
+> "Lasers create fumes and smoke. It is important to create a proper ventilation system to ensure respiratory safety. Ventilation could be through a window or an air purifying system."
+
+Source: https://support.xtool.com/article/1275 ("10 Tips to Ensure a Safe and Clean Lasering Experience")
+
+The D1 Safety Guide reinforces this in its fire-safety section:
+
+> "Ensure that the workspace is well ventilated, so that the smoke can be discharged properly."
+
+Source: https://support.xtool.com/article/354
+
+For enclosed CO2 machines like P2, xTool documents two supported exhaust paths:
+
+> "How to exhaust the smoke out of the machine? Way 1: Connect one end of the smoke exhaust pipe to the machine and the other end to the open air. The fan inside the machine exhausts the smoke out of the machine. Way 2: Connect the other end of the smoke exhaust pipe to a purifier. You can purchase xTool Smoke Purifier..."
+
+Source: https://support.xtool.com/article/825
+
+The F2 FAQ requires ventilation explicitly as a Class 4 laser safety precaution:
+
+> "Use an air purifier or exhaust system for proper ventilation."
+
+Source: https://support.xtool.com/article/2818
+
+**Practical takeaway**: vent to open air (window duct) or use a dedicated fume/smoke purifier (e.g., xTool Smoke Purifier) every time you run the machine — do not rely on running it in a closed room "just this once," even for materials considered safe.
+
+---
+
+## 3. Fire Safety
+
+Laser processing is inherently a fire risk because the process works by heating material to the point of vaporization, and most craft materials are flammable.
+
+### Never leave a running laser unattended
+
+This is repeated as the single most emphasized fire-safety rule across xTool's official documentation:
+
+> "Keep watching: Never leave your laser unattended while it is running in case of fire."
+
+Source: https://support.xtool.com/article/1275
+
+> "Do not leave the machine unattended when it is working. If the machine works with incorrect settings and is left unattended for a long period of time, or if a mechanical or electrical fault occurs, a fire may be caused."
+
+Source: https://support.xtool.com/article/354
+
+### Fire watch / fire extinguisher
+
+> "Always have a fire extinguisher nearby: Always keep a well-maintained CO2 fire extinguisher or a fire blanket within arm's reach of your laser. If it's a small flame, a spray bottle is enough."
+
+Source: https://support.xtool.com/article/1275
+
+The D1 Safety Guide adds housekeeping guidance to reduce fire spread risk:
+
+> "Do not stack materials (especially organic ones, such as paper) around the machine. They may cause the spread of flames and increase the risk of material ignition."
+>
+> "Ensure that the area around the machine is clean without any cluttered flammable materials, explosives, or volatile solvents, such as acetone, alcohol, or gasoline. Keep a fire extinguisher and perform regular maintenance and inspection of it."
+>
+> "Clean the machine regularly. Excessive accumulation of residues and chippings from cutting and engraving may increase the risk of fire."
+
+Source: https://support.xtool.com/article/354
+
+### Vector cutting is the highest fire-risk operation
+
+> "When the machine cuts or engraves a material, a high-density laser beam falls on the material, heating up the surface of the material to vaporize it without burning. But most materials are inherently flammable and may be ignited to form an open flame that may burn down the machine (even if it is made of flame-retardant materials) and its surroundings. From our experience, using laser to perform vector cutting is most likely to produce an open flame."
+
+Source: https://support.xtool.com/article/354
+
+### Material-specific fire-risk thresholds
+
+- **P2 (CO2 55W)**: "When cutting plywood, you are advised not to cut a piece thicker than 12mm. The cutting of thick plywood may cause a fire." — official P2 FAQ, https://support.xtool.com/article/825
+- **S1**: triggers a dedicated fire-risk error code (M53 F5) when a job combines a small design area (≤10x10cm), high power (≥90%), and low speed (≤10mm/s) — this specific combination concentrates enough heat in a small area to raise ignition risk. See support.xtool.com/article/1481.
+- **Oily/resinous woods**: "Be careful about cutting oily or very resinous woods to prevent fire. Watch out while cutting wood at a speed under 2% at full power." — https://support.xtool.com/article/354
+- **Cardboard/carton**: "Cuts well but may catch fire. Watch out for fire and be attentive to cutting." — https://support.xtool.com/article/354
+
+### Emergency response
+
+The F2 FAQ gives the most explicit emergency instruction found in official documentation:
+
+> "Press the emergency stop button immediately if you see flames, smoke, or hear abnormal sounds."
+
+Source: https://support.xtool.com/article/2818
+
+---
+
+## 4. Eye Protection
+
+Laser light — including reflected/scattered light, not just the direct beam — can cause permanent eye damage, and the relevant wavelength ranges are NOT limited to visible light.
+
+> "Eye protection is a necessity: Wear eye protection within the ranges of 190nm-460nm & 800nm-1100nm any time you are working with an active laser."
+
+Source: https://support.xtool.com/article/1275
+
+This dual range matters because xTool's product line spans multiple laser wavelengths: blue diode lasers (~445-460nm, covered by the first range) and infrared/fiber lasers (~1064nm, covered by the second range) are both in active use across D1 Pro, S1, M1, F1, and F1 Ultra.
+
+For the D1 specifically:
+
+> "Although a hood is provided to shield you from some laser light, you still need to wear the goggles to protect your eyes."
+
+Source: https://support.xtool.com/article/354
+
+For CO2 machines (P2), goggles are optional because the lid fully filters the beam, but if purchased, must match the CO2 wavelength — not the diode/fiber ranges above:
+
+> "If I need to purchase protective goggles, what specifications are required? The lid is designed to filter laser light, so you don't need to buy separate protective goggles. However, if you do, make sure they have an OD4 protection level and are wavelength-rated for 10640nm."
+
+Source: https://support.xtool.com/article/825
+
+For F2 (dual blue-light 445nm + infrared 1064nm, Class 4):
+
+> "Always wear laser goggles rated for 445 nm and 1064 nm laser... When operating with the protective enclosure open, stay ≥ 0.5 m away and wear goggles and a mask."
+
+Source: https://support.xtool.com/article/2818
+
+**Key principle**: laser safety eyewear must be rated for the SPECIFIC wavelength(s) your machine's laser module(s) emit — a pair of goggles rated for one wavelength range does not protect against another. Always check your exact machine's laser type(s) before buying eyewear, and re-check when using a dual-laser machine like F1/F1 Ultra/F2 across both its blue-diode and infrared/fiber modules.
+
+---
+
+## 5. Air Assist
+
+Air assist is often thought of purely as a cut-quality feature, but it is also a safety feature: it actively displaces the hot combustion byproducts and flammable off-gas at the kerf, reducing sustained-flame risk and keeping optics clear of debris that could otherwise absorb stray energy and create a secondary heat source.
+
+> "Air assist for cleaning cutting: Laser engraving and cutting can generate a significant amount of heat, especially when working with dense or thick materials. An air assist will ensure a cleaner cut and engrave in your workpiece."
+
+Source: https://support.xtool.com/article/1275
+
+The M2 cheat sheet frames it explicitly as a pre-job checklist item, alongside protective gear and material shielding:
+
+> "Turn on air-assist. Air-assist blows away dust, smoke, and char, keeps the lens cleaner, and keeps the cutting path clear."
+
+Source: https://support.xtool.com/article/3538
+
+**Practical takeaway**: always enable air assist when your machine has it, especially for cutting operations (the highest fire-risk operation type) and on thick/dense materials where heat buildup is greatest.
+
+---
+
+## 6. General Safety Guidance
+
+### Enclosure
+
+> "Laser Enclosure for all-around protection: Utilizing an enclosure that surrounds the entire laser will eliminate the risk of accidental injury to people and pets by ensuring debris remains within the enclosure."
+
+Source: https://support.xtool.com/article/1275
+
+Machines vary in enclosure design: S1, P2, F1 Ultra, and F2 are enclosed (Class 1 or Class 4 with enclosure) by default, while D1 Pro is an open-frame machine requiring the user to provide their own shielding/enclosure and extra caution. Per the F2 FAQ's Class 4 classification logic:
+
+> "Even though xTool F2 has a protective enclosure, it remains a Class 4 laser device because you can operate it with its protective enclosure open. According to laser safety standards, if the beam can be exposed under any condition, the device must be classified as Class 4. Always keep the protective enclosure closed and wear protective goggles during operation."
+
+Source: https://support.xtool.com/article/2818
+
+### Machine inspection and workspace condition
+
+> "Check the machine for damage every time before you use it. Do not operate it in any way when any damage or defect is found. Ensure that the workspace is clean and flat."
+
+Source: https://support.xtool.com/article/354
+
+### Do not disassemble or modify
+
+> "Do not disassemble the machine or change its structure in any way without authorization. Do not modify or decompile its operating system... Do not operate the machine when any part of it is removed. Removing any part may expose the laser system and cause damage to the machine."
+
+Source: https://support.xtool.com/article/354
+
+### Electrical safety
+
+> "Do not disassemble the machine when it is connected to a power supply. Otherwise, an electric shock may be caused."
+
+Source: https://support.xtool.com/article/354
+
+### Keep children and pets away; secure the machine after use
+
+> "Keep the device away from children and remove the key after use."
+
+Source: https://support.xtool.com/article/2818 (F2 FAQ)
+
+### Cleaning and maintenance reduce risk, not just improve output
+
+> "Cleaning after lasering: It is important to clean the scraps, debris, and dust from your working area after each project. This will reduce the risk of fire and/or exposure to harmful fumes or particles."
+>
+> "Maintenance for a longer life span: Dust and debris can accumulate within the machine and cause reduced efficiency, decreased performance, and potential damage. It is important to follow a regular maintenance plan to ensure the longevity of the laser."
+
+Source: https://support.xtool.com/article/1275
+
+### Read the manual for your specific machine
+
+> "Read the manual: Read the safety and operating instructions thoroughly prior to using the laser. Make sure you follow all the limits and know all the risks of operating your laser."
+
+Source: https://support.xtool.com/article/1275
+
+### Temperature operating range
+
+> "The machine works properly at the temperature of 0°C to 35°C and can be stored properly at the temperature of 0°C to 45°C. Do not operate it at a temperature lower than 0°C."
+
+Source: https://support.xtool.com/article/354
+
+---
+
+## Quick-Reference Checklist
+
+Before starting any job:
+- [ ] Confirm the material is not PVC/vinyl/chlorine-containing, and not on the prohibited list (chromium leather, PVB, PTFE, beryllium oxide, halogens, epoxy/phenolic resins, carbon fiber/fiberglass) or otherwise unknown-composition
+- [ ] Ventilation/fume extraction running (open-air duct or smoke purifier)
+- [ ] Air assist enabled
+- [ ] Fire extinguisher (CO2) or fire blanket within arm's reach
+- [ ] Correct-wavelength laser safety eyewear on hand if the enclosure doesn't fully shield you
+- [ ] Enclosure/cover closed and workspace clear of clutter and flammable materials nearby
+- [ ] Someone present and watching for the entire duration of the job — never walk away
+- [ ] Machine inspected for visible damage before powering on
+
+---
+
+*Compiled from support.xtool.com/learning-center. All quotes verbatim from the cited official articles as of research date. Always consult your specific machine's printed manual and the latest version of these official articles, since safety guidance may be updated over time.*
+
+## .xcs format reference
+# xTool .xcs format (reverse-engineered, community)
+
+- `.xcs` is plain, uncompressed JSON (the newer `.xs` is a different zip bundle).
+- Coordinates are millimeters; origin is the top-left of each shape's bounding box.
+- Shapes ("displays") live in `canvas[0].displays`. Types: RECT, LINE, CIRCLE, PATH, PEN, TEXT, BITMAP. Vector geometry uses an SVG-`d`-style `dPath` string.
+- CIRCLE must set `scale = width / 5900` or Studio renders it invisible.
+- Laser parameters are NOT on the shape. They live in `device.data`, a JS Map serialized as `{ "dataType": "Map", "value": [[canvasId, {...}]] }` whose per-canvas object holds a nested `displays` Map keyed by shape id.
+- processingType = the mode: VECTOR_CUTTING (cut), VECTOR_ENGRAVING (score/line engrave), COLOR_FILL_ENGRAVE / FILL_VECTOR_ENGRAVING (raster fill), INTAGLIO (relief), COLOR_ENGRAVE (bitmap).
+- Parameter keys (under data.<TYPE>.parameter.customize): power, speed, repeat (= passes, NOT "passes"), processingLightSource ("blue"=diode, "red"=fiber/MOPA), pulseWidth (ns, fixed set), mopaFrequency (kHz); raster adds density + dpi.
+- The machine is identified by top-level `extId` (model code, e.g. "D1") and `extName`.
+
+This tool's `build_xcs` output targets the single-file JSON on the well-trodden D1/F1-class path. Always open the result in Studio/XCS and verify before running.
+
