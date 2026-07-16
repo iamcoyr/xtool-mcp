@@ -46,6 +46,12 @@ export function generateBox(opts: BoxOptions): BoxResult {
   if ([W, D, H, t].some((v) => !Number.isFinite(v) || v <= 0)) {
     throw new Error("width, depth, height, thickness must all be positive numbers.");
   }
+  if (Math.max(W, D, H) > 1500) {
+    throw new Error("Box dimensions are limited to 1500mm per side.");
+  }
+  if (t > 30) {
+    throw new Error("Material thickness is limited to 30mm.");
+  }
   const finger = opts.finger ?? Math.max(3 * t, 8);
   const kerf = opts.kerf ?? 0;
   const openTop = opts.openTop ?? true;

@@ -48,6 +48,15 @@ export function generateTestGrid(opts: TestGridOptions): TestGridResult {
   if (opts.xValues.length === 0 || opts.yValues.length === 0) {
     throw new Error("xValues and yValues must each have at least one entry.");
   }
+  if (opts.xValues.length > 40 || opts.yValues.length > 40) {
+    throw new Error("Each test-grid axis is limited to 40 values.");
+  }
+  if (opts.xValues.length * opts.yValues.length > 400) {
+    throw new Error("Test grid is limited to 400 cells; reduce the value lists.");
+  }
+  if ([...opts.xValues, ...opts.yValues].some((v) => !Number.isFinite(v))) {
+    throw new Error("All test-grid values must be finite numbers.");
+  }
 
   const cell = opts.cellSizeMm ?? 8;
   const gap = opts.gapMm ?? 4;

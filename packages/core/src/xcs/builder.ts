@@ -214,20 +214,26 @@ function buildDisplay(shape: Shape): Record<string, unknown> {
   }
 }
 
+function clampNum(v: number, min: number, max: number): number {
+  if (!Number.isFinite(v)) return min;
+  return Math.min(max, Math.max(min, v));
+}
+
 function buildProcessingEntry(shape: Shape, lightSource: "blue" | "red"): Record<string, unknown> {
   const pt = processingTypeFor(shape.op);
   const isFill = shape.op.type === "engrave";
+  // Clamp to physically valid ranges so a stray parameter can't emit an unsafe/invalid job.
   const customize: Record<string, unknown> = {
-    power: shape.op.power_pct,
-    speed: shape.op.speed_mm_s,
-    repeat: shape.op.passes,
+    power: clampNum(shape.op.power_pct, 0, 100),
+    speed: Math.max(0.1, Number.isFinite(shape.op.speed_mm_s) ? shape.op.speed_mm_s : 100),
+    repeat: clampNum(Math.round(shape.op.passes), 1, 50),
     processingLightSource: lightSource,
     pulseWidth: 200,
     mopaFrequency: 65
   };
   if (pt === "COLOR_FILL_ENGRAVE") {
     customize.density = 100;
-    customize.dpi = shape.op.dpi ?? 300;
+    customize.dpi = clampNum(Math.round(shape.op.dpi ?? 300), 10, 4000);
     customize.dotDuration = 100;
     customize.bitmapEngraveMode = "normal";
     customize.bitmapScanMode = "zMode";

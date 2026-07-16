@@ -27,13 +27,19 @@ export function listMachines(): Machine[] {
 }
 
 export function getMachine(idOrName: string): Machine | undefined {
-  const q = norm(idOrName);
-  return (
-    machines.find((m) => norm(m.id) === q || norm(m.name) === q) ??
-    machines.find(
-      (m) => norm(m.name).includes(q) || q.includes(norm(m.id)) || q.includes(norm(m.name))
-    )
-  );
+  const q = machineKey(idOrName);
+  if (!q) return undefined;
+  // 1) Exact match on the wattage-stripped id or name key.
+  const exact = machines.find((m) => idKey(m.id) === q || machineKey(m.name) === q);
+  if (exact) return exact;
+  // 2) Most-specific word-boundary match on the id key (so "D1 Pro" != "D1").
+  const scored = machines
+    .map((m) => ({ m, k: idKey(m.id) }))
+    .filter(({ k }) => q === k || q.startsWith(`${k} `) || k.startsWith(`${q} `))
+    .sort((a, b) => b.k.length - a.k.length);
+  if (scored[0]) return scored[0].m;
+  // 3) Loose fallback on the name.
+  return machines.find((m) => machineKey(m.name).includes(q));
 }
 
 /** Normalize a machine label to a comparable key, stripping "xTool" and wattage. */
@@ -106,6 +112,8 @@ export interface RecommendQuery {
 
 export interface RecommendationResult {
   resolvedMachine: Machine | null;
+  /** True when the material must not be lasered at all (e.g. PVC/vinyl). */
+  prohibited: boolean;
   matches: MaterialSetting[];
   best: MaterialSetting | null;
   exact: boolean;
@@ -124,16 +132,37 @@ const CONFIDENCE_WEIGHT: Record<MaterialSetting["confidence"], number> = {
 function materialCloseness(candidate: string, query: string): number {
   const c = norm(candidate);
   const q = norm(query);
-  if (c === q) return 3;
-  if (c.includes(q) || q.includes(c)) return 2;
+  if (c === q) return 4;
+  if (c.includes(q) || q.includes(c)) return 3;
   const ct = new Set(tokenize(candidate));
   const qt = tokenize(query);
-  const overlap = qt.filter((t) => ct.has(t)).length;
-  return overlap > 0 ? 1 : -5;
+  if (qt.length === 0) return -5;
+  const found = qt.filter((t) => ct.has(t)).length;
+  if (found === 0) return -5;
+  // Reward the fraction of query terms present so "cast acrylic" beats
+  // "extruded acrylic" for a cast-acrylic query.
+  return (found / qt.length) * 2;
 }
 
 export function recommendSettings(query: RecommendQuery): RecommendationResult {
   const machine = getMachine(query.machine) ?? null;
+
+  const banned = prohibitedMaterial(query.material);
+  if (banned) {
+    return {
+      resolvedMachine: machine,
+      prohibited: true,
+      matches: [],
+      best: null,
+      exact: false,
+      safety: safetyNotesFor(query.material),
+      caveats: [banned.reason],
+      guidance:
+        `DO NOT laser ${query.material}. Reason: ${banned.reason}. This is unsafe on any xTool ` +
+        `machine — do not run a test grid to "find settings" either.` +
+        (banned.alt ? ` ${banned.alt}` : "")
+    };
+  }
 
   const scored = materials
     .map((row) => {
@@ -187,6 +216,7 @@ export function recommendSettings(query: RecommendQuery): RecommendationResult {
 
   return {
     resolvedMachine: machine,
+    prohibited: false,
     matches,
     best,
     exact,
@@ -194,6 +224,42 @@ export function recommendSettings(query: RecommendQuery): RecommendationResult {
     caveats: caveatsFor(query, machine, best, exact),
     guidance: guidanceFor(query, machine, best, exact)
   };
+}
+
+interface Prohibited {
+  reason: string;
+  alt?: string;
+}
+
+/** Materials that must never be lasered on any xTool machine. */
+function prohibitedMaterial(material: string): Prohibited | null {
+  const padded = ` ${norm(material)} `;
+  const has = (...terms: string[]): boolean => terms.some((t) => padded.includes(` ${t} `));
+  if (has("pvc", "vinyl", "polyvinyl", "pleather", "faux leather", "leatherette")) {
+    return {
+      reason: "it contains PVC/chlorine, which releases toxic chlorine gas and corrodes the machine",
+      alt: "If you need to cut vinyl/PVC sheet, use a mechanical blade cutter (e.g. xTool M1 / M1 Ultra), not the laser."
+    };
+  }
+  if (has("polycarbonate", "lexan")) {
+    return { reason: "polycarbonate burns and yellows, is a fire hazard, and does not cut cleanly" };
+  }
+  if (has("abs")) {
+    return { reason: "ABS melts and emits toxic fumes when lasered" };
+  }
+  if (has("ptfe", "teflon")) {
+    return { reason: "PTFE/Teflon emits toxic fluorine compounds (including HF gas) when lasered" };
+  }
+  if (has("fiberglass", "fibreglass")) {
+    return { reason: "fiberglass emits fine glass particles and resin fumes when lasered" };
+  }
+  if (has("hdpe")) {
+    return { reason: "HDPE melts and can catch fire when lasered" };
+  }
+  if (has("styrofoam", "polystyrene foam")) {
+    return { reason: "polystyrene foam catches fire extremely easily when lasered" };
+  }
+  return null;
 }
 
 function safetyNotesFor(material: string): string[] {

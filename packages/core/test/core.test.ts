@@ -17,6 +17,10 @@ describe("machines", () => {
     expect(listMachines().length).toBeGreaterThan(5);
     expect(getMachine("P2")?.category).toBe("co2");
     expect(getMachine("xTool D1 Pro")?.id).toBe("d1-pro");
+    // "D1 Pro" must not collapse to plain "D1"; F2 must not collapse to F2 Ultra.
+    expect(getMachine("D1 Pro")?.id).toBe("d1-pro");
+    expect(getMachine("F2")?.id).toBe("f2");
+    expect(getMachine("F2 Ultra")?.id).toBe("f2-ultra");
   });
 });
 
@@ -38,6 +42,16 @@ describe("recommendSettings", () => {
     const r = recommendSettings({ machine: "D1 Pro", material: "unobtainium", operation: "cut" });
     expect(r.best).toBeNull();
     expect(r.guidance).toMatch(/test grid/i);
+  });
+
+  it("hard-refuses prohibited materials and never suggests a test grid", () => {
+    const r = recommendSettings({ machine: "S1", material: "PVC", operation: "cut" });
+    expect(r.prohibited).toBe(true);
+    expect(r.best).toBeNull();
+    expect(r.guidance).toMatch(/do not laser/i);
+    // Must not send the user off to "find settings" via a test grid for a banned material.
+    expect(r.guidance).not.toMatch(/find safe values/i);
+    expect(r.guidance).not.toMatch(/generate_test_grid/i);
   });
 });
 
@@ -115,6 +129,43 @@ describe("SVG import", () => {
     expect(design.shapes.length).toBe(1);
     expect(design.shapes[0]?.kind).toBe("rect");
     expect(design.widthMm).toBe(50);
+  });
+});
+
+describe("input limits & clamping", () => {
+  it("caps test-grid cell count", () => {
+    expect(() =>
+      generateTestGrid({
+        xParam: "power",
+        xValues: Array.from({ length: 30 }, (_, i) => i),
+        yParam: "speed",
+        yValues: Array.from({ length: 20 }, (_, i) => i)
+      })
+    ).toThrow(/400 cells/);
+  });
+
+  it("caps box dimensions", () => {
+    expect(() => generateBox({ width: 2000, depth: 100, height: 100, thickness: 3 })).toThrow(/1500mm/);
+  });
+
+  it("clamps out-of-range op params in the .xcs", () => {
+    const d = emptyDesign(20, 20);
+    d.shapes.push({
+      kind: "rect",
+      id: "r",
+      x: 0,
+      y: 0,
+      width: 10,
+      height: 10,
+      op: { type: "cut", power_pct: 150, speed_mm_s: 0, passes: 0 }
+    });
+    const built = buildXcs(d, { machine: "D1 Pro" });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cz = (built.doc as any).device.data.value[0][1].displays.value[0][1].data.VECTOR_CUTTING
+      .parameter.customize;
+    expect(cz.power).toBe(100);
+    expect(cz.speed).toBeGreaterThan(0);
+    expect(cz.repeat).toBeGreaterThanOrEqual(1);
   });
 });
 

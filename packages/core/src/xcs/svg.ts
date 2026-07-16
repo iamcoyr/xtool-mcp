@@ -74,6 +74,9 @@ const DEFAULT_OP: OpParams = { type: "cut", power_pct: 100, speed_mm_s: 10, pass
 /** Best-effort parse of an SVG string into a Design. */
 export function svgToDesign(svg: string, options: SvgImportOptions = {}): Design {
   const op = options.defaultOp ?? DEFAULT_OP;
+  if (svg.length > 500_000) {
+    throw new Error("SVG is too large (500KB limit).");
+  }
   const { widthMm, heightMm } = readCanvasSize(svg);
   const shapes: Shape[] = [];
   let counter = 0;
@@ -155,6 +158,9 @@ export function svgToDesign(svg: string, options: SvgImportOptions = {}): Design
     }
   }
 
+  if (shapes.length > 5000) {
+    throw new Error("SVG has too many shapes (5000 limit).");
+  }
   return { widthMm, heightMm, units: "mm", shapes, meta: { generator: "svgToDesign" } };
 }
 

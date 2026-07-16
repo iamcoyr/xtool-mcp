@@ -44,8 +44,14 @@ export class XToolMcpAgent extends McpAgent<Env> {
   }
 }
 
+const COMMON_HEADERS: Record<string, string> = {
+  "access-control-allow-origin": "*",
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "no-referrer"
+};
+
 function text(body: string, contentType = "text/plain; charset=utf-8"): Response {
-  return new Response(body, { headers: { "content-type": contentType } });
+  return new Response(body, { headers: { "content-type": contentType, ...COMMON_HEADERS } });
 }
 
 const INFO_HTML = `<!doctype html><html><head><meta charset="utf-8">
@@ -84,24 +90,40 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // MCP transports — the agents SDK manages their own CORS/session handling.
     if (path === "/mcp") {
       return XToolMcpAgent.serve("/mcp").fetch(request, env, ctx);
     }
     if (path === "/sse" || path === "/sse/message") {
       return XToolMcpAgent.serveSSE("/sse").fetch(request, env, ctx);
     }
-    if (path === "/llms.txt") {
-      return text(llmsTxt(url.origin));
+
+    const infoRoutes = new Set(["/", "/health", "/llms.txt", "/llms-full.txt"]);
+    if (request.method === "OPTIONS" && infoRoutes.has(path)) {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...COMMON_HEADERS,
+          "access-control-allow-methods": "GET, OPTIONS",
+          "access-control-allow-headers": "content-type"
+        }
+      });
     }
-    if (path === "/llms-full.txt") {
-      return text(llmsFullTxt(url.origin));
+    if (request.method !== "GET" && infoRoutes.has(path)) {
+      return Response.json({ error: "method not allowed" }, { status: 405, headers: COMMON_HEADERS });
     }
+
+    if (path === "/llms.txt") return text(llmsTxt(url.origin));
+    if (path === "/llms-full.txt") return text(llmsFullTxt(url.origin));
     if (path === "/health") {
-      return Response.json({ ok: true, name: SERVER_INFO.name, version: SERVER_INFO.version });
+      return Response.json(
+        { ok: true, name: SERVER_INFO.name, version: SERVER_INFO.version },
+        { headers: COMMON_HEADERS }
+      );
     }
     if (path === "/") {
       return text(INFO_HTML.replace(/\$\{origin\}/g, url.origin), "text/html; charset=utf-8");
     }
-    return new Response("Not found", { status: 404 });
+    return Response.json({ error: "not found" }, { status: 404, headers: COMMON_HEADERS });
   }
 };
