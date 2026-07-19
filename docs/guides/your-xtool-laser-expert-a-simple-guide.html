@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your xTool Laser Expert — A Plain-English Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EE;
+    --card:#FFFFFF;
+    --ink:#1C1714;
+    --ink2:#4B423B;
+    --muted:#867A6D;
+    --line:#E5DCCE;
+    --line2:#D9CFBE;
+    --ember:#D9500F;
+    --ember-ink:#B23F07;
+    --ember-soft:#FBE9D8;
+    --safe:#201B18;
+    --safe-line:#3A322C;
+    --safe-red:#FF7A57;
+    --safe-text:#EDE6DD;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 500px at 85% -8%, #FCEFE3 0%, rgba(252,239,227,0) 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Inter",system-ui,Segoe UI,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:40px 6% 56px}
+
+  /* ---------- masthead ---------- */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted);
+    padding-bottom:14px;border-bottom:1px solid var(--line);
+  }
+  .topbar .dot{color:var(--ember)}
+  .topbar b{color:var(--ink2);font-weight:500}
+
+  .hero{display:grid;grid-template-columns:1.35fr 1fr;gap:34px;align-items:center;margin-top:30px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ember-ink);
+    background:var(--ember-soft);border:1px solid #F1D3B9;
+    padding:6px 12px;border-radius:999px;
+  }
+  .eyebrow .spark{width:8px;height:8px;border-radius:2px;background:var(--ember);transform:rotate(45deg)}
+  h1{
+    font-family:"Space Grotesk",sans-serif;font-weight:700;
+    font-size:clamp(33px,4.6vw,52px);line-height:1.02;letter-spacing:-.02em;
+    margin:18px 0 0;color:var(--ink);
+  }
+  h1 .u{color:var(--ember);}
+  .deck{font-size:18px;line-height:1.5;color:var(--ink2);margin:16px 0 0;max-width:34ch}
+
+  /* ---------- sample chat card ---------- */
+  .chat{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 18px;box-shadow:0 18px 40px -28px rgba(60,40,20,.4);
+  }
+  .chat .head{
+    display:flex;align-items:center;gap:9px;font-family:"JetBrains Mono",monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    padding-bottom:12px;margin-bottom:12px;border-bottom:1px dashed var(--line2);
+  }
+  .chat .head .led{width:9px;height:9px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 3px var(--ember-soft)}
+  .bubble{border-radius:12px;padding:10px 13px;font-size:13.5px;margin:8px 0;line-height:1.45}
+  .bubble.you{background:#F1EDE5;border:1px solid var(--line);color:var(--ink)}
+  .bubble.bot{background:#FFF8F2;border:1px solid #F0D9C4;color:var(--ink)}
+  .bubble .who{display:block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .tag{
+    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+    color:var(--ember-ink);background:var(--ember-soft);border:1px solid #F1D3B9;
+    border-radius:6px;padding:1px 7px;margin-top:6px;letter-spacing:.03em;
+  }
+
+  /* ---------- generic section ---------- */
+  section{margin-top:40px}
+  .h2{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ember-ink);
+    display:flex;align-items:center;gap:12px;margin:0 0 20px;
+  }
+  .h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .lead{font-size:16.5px;color:var(--ink2);max-width:74ch;margin:0}
+  .lead b{color:var(--ink);font-weight:600}
+  .aside{
+    margin-top:16px;font-size:13.5px;color:var(--muted);border-left:2px solid var(--line2);
+    padding:2px 0 2px 14px;max-width:72ch;
+  }
+  .aside b{color:var(--ink2)}
+
+  /* ---------- benefit grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+  .tile .ic{
+    width:38px;height:38px;border-radius:10px;background:var(--ember-soft);border:1px solid #F2D6BE;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+  }
+  .tile .ic svg{width:20px;height:20px;stroke:var(--ember-ink);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tile h3{font-family:"Space Grotesk",sans-serif;font-size:16.5px;font-weight:600;margin:0 0 5px;letter-spacing:-.01em}
+  .tile p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.5}
+
+  /* ---------- two-column lower ---------- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .prompts{display:flex;flex-direction:column;gap:10px}
+  .prompt{
+    display:flex;gap:11px;align-items:flex-start;
+    background:var(--card);border:1px solid var(--line);border-radius:11px;
+    padding:11px 13px;font-size:14px;color:var(--ink);
+  }
+  .prompt .q{color:var(--ember);font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;line-height:1.5;flex:0 0 auto}
+
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step .n{
+    flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--ink);color:#fff;
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:15px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step.alt .n{background:var(--ember)}
+  .step h4{margin:2px 0 3px;font-family:"Space Grotesk",sans-serif;font-size:15.5px;font-weight:600}
+  .step p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.5}
+  .step code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#F1EDE5;
+    border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--ember-ink);word-break:break-all}
+  .fineprint{margin-top:16px;font-size:12.5px;color:var(--muted)}
+  .fineprint code{font-family:"JetBrains Mono",monospace;background:#F1EDE5;border:1px solid var(--line);
+    border-radius:5px;padding:1px 6px;color:var(--ink2)}
+
+  /* ---------- safety band ---------- */
+  .safety{
+    margin-top:44px;background:var(--safe);color:var(--safe-text);
+    border-radius:18px;padding:26px 28px;
+  }
+  .safety .cap{
+    display:flex;align-items:center;gap:11px;
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--safe-red);margin-bottom:16px;
+  }
+  .safety .cap svg{width:22px;height:22px;stroke:var(--safe-red);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .safelist{display:grid;grid-template-columns:repeat(2,1fr);gap:11px 30px;margin:0;padding:0;list-style:none}
+  .safelist li{position:relative;padding-left:22px;font-size:14px;line-height:1.5;color:var(--safe-text)}
+  .safelist li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;
+    border-radius:2px;background:var(--safe-red);transform:rotate(45deg)}
+  .safelist li b{color:#fff;font-weight:600}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+  footer .fnote{font-size:12.5px;color:var(--muted);max-width:60ch;line-height:1.5}
+  footer .fnote b{color:var(--ink2)}
+  .endpoint{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink);
+    background:var(--card);border:1px solid var(--line2);border-radius:8px;padding:9px 12px;white-space:nowrap}
+  .endpoint .lbl{color:var(--muted);display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+  a{color:var(--ember-ink)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:840px){
+    .hero{grid-template-columns:1fr;gap:24px}
+    .grid{grid-template-columns:1fr 1fr}
+    .cols{grid-template-columns:1fr;gap:26px}
+    .safelist{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr}
+    .topbar{flex-direction:column;align-items:flex-start;gap:6px}
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    :root{--paper:#fff}
+    body{background:#fff}
+    .wrap{max-width:100%;padding:0 4%}
+    .chat,.tile,.prompt,.endpoint{box-shadow:none}
+    .safety{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .eyebrow,.tag,.tile .ic,.bubble.bot,.safety{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{margin-top:22px;break-inside:avoid}
+    .tile,.step,.prompt{break-inside:avoid}
+    h1{font-size:38px}
+    @page{size:A4;margin:12mm}
+  }
+</style>
+<style>
+.ha-img-placeholder{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;background:#f4f4f5;border:1px dashed #d4d4d8;border-radius:8px;color:#71717a;font-size:12px;font-family:system-ui,sans-serif;min-height:80px;padding:16px;box-sizing:border-box;animation:ha-img-pulse 1.5s ease-in-out infinite}
+.ha-img-placeholder.ha-failed{animation:none;opacity:.7}
+@keyframes ha-img-pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@media(prefers-color-scheme:dark){.ha-img-placeholder{background:#27272a;border-color:#3f3f46;color:#a1a1aa}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <div class="topbar">
+    <span>xTool&nbsp;Laser&nbsp;Assistant <span class="dot">&bull;</span> Bench Field Guide</span>
+    <span><b>Free</b> &nbsp;<span class="dot">/</span>&nbsp; <b>Community-built</b> &nbsp;<span class="dot">/</span>&nbsp; Works with your AI</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <span class="eyebrow"><span class="spark"></span> Stop guessing. Start cutting.</span>
+      <h1>An expert for your <span class="u">xTool laser</span>, right inside your AI assistant.</h1>
+      <p class="deck">Ask a question in plain English and get honest, machine-specific answers — the right starting settings, straight troubleshooting, safety checks, and ready-to-cut designs.</p>
+    </div>
+
+    <div class="chat" aria-label="Sample conversation">
+      <div class="head"><span class="led"></span> Sample chat</div>
+      <div class="bubble you"><span class="who">You</span>What settings should I use to cut 3&nbsp;mm basswood on my D1 Pro?</div>
+      <div class="bubble bot"><span class="who">xTool Assistant</span>For a 10W D1 Pro, a common starting point is full power, ~8&nbsp;mm/s, 2 passes, air assist on. These are starting numbers, not a guarantee.
+        <span class="tag">Confidence: medium &bull; test on scrap first</span></div>
+      <div class="bubble you"><span class="who">You</span>Can I cut this vinyl sticker sheet?</div>
+      <div class="bubble bot"><span class="who">xTool Assistant</span>No — vinyl (PVC) releases chlorine gas that harms you and corrodes your machine. Use a blade cutter instead. I won't give laser settings for it.</div>
+    </div>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <section>
+    <div class="h2">What it actually is</div>
+    <p class="lead">Think of it as a <b>knowledgeable friend who knows every xTool machine</b>. It plugs into the AI assistant you already chat with and gives it real answers about <b>your</b> laser: how big it cuts, which software it uses, tested starting settings for your material, how to fix a bad cut, and whether a material is even safe to burn. It's free, and it's built by makers for makers.</p>
+    <p class="aside"><b>Under the hood:</b> the tool is called an <b>MCP</b> (Model Context Protocol) server — a standard way to hand an AI assistant a specialized skill. You don't need to understand any of that to use it. It is <b>not made by xTool</b>; treat everything as a smart starting point, and follow xTool's official guidance whenever they differ.</p>
+  </section>
+
+  <!-- WHY IT HELPS -->
+  <section>
+    <div class="h2">Why it helps at the bench</div>
+    <div class="grid">
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></div>
+        <h3>Stop wasting material</h3>
+        <p>Get power, speed, passes and DPI starting points for your exact machine and material — each with a confidence rating, not a wild guess.</p>
+      </div>
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9h5M7 13h9"/></svg></div>
+        <h3>Know your machine</h3>
+        <p>Work area, laser type and power, and whether you use XCS or Studio — looked up for all 14 current xTool machines, not remembered wrong.</p>
+      </div>
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2 2.6-2.6z"/></svg></div>
+        <h3>Fix problems fast</h3>
+        <p>Describe the symptom — “not cutting through,” “smoky engraving,” “won't connect” — and get likely causes and fixes in the order to try them.</p>
+      </div>
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9.2 12l2 2 3.6-4"/></svg></div>
+        <h3>Stay safe</h3>
+        <p>Instant “is this safe to cut?” checks. It flatly refuses dangerous materials like PVC and vinyl — and tells you why.</p>
+      </div>
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg></div>
+        <h3>Make things quicker</h3>
+        <p>Generates cut-ready files for you: material test grids, finger-joint boxes, and turning an SVG into an <code style="font-family:inherit">.xcs</code> project.</p>
+      </div>
+      <div class="tile">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7l7-4 7 4M4 8l3.5 7a3.5 3.5 0 0 1-7 0L4 8zM16.5 8l3.5 7a3.5 3.5 0 0 1-7 0L16.5 8z"/></svg></div>
+        <h3>Honest by design</h3>
+        <p>When it isn't sure, it says so — and points you to a quick test grid instead of inventing a number. Every setting says “test on scrap first.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASK + START -->
+  <section>
+    <div class="cols">
+      <div>
+        <div class="h2">Try asking</div>
+        <div class="prompts">
+          <div class="prompt"><span class="q">&raquo;</span> “What settings cut 3&nbsp;mm plywood on my P2?”</div>
+          <div class="prompt"><span class="q">&raquo;</span> “My engraving looks faded — how do I make it darker?”</div>
+          <div class="prompt"><span class="q">&raquo;</span> “Is it safe to engrave this coated tumbler?”</div>
+          <div class="prompt"><span class="q">&raquo;</span> “Make me a test grid for engraving slate.”</div>
+          <div class="prompt"><span class="q">&raquo;</span> “Design a finger-joint box for 3&nbsp;mm wood, 100&times;80&times;50&nbsp;mm.”</div>
+          <div class="prompt"><span class="q">&raquo;</span> “Do I use XCS or Studio for my F1&nbsp;Ultra?”</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="h2">How to start</div>
+        <div class="steps">
+          <div class="step alt">
+            <div class="n">1</div>
+            <div>
+              <h4>The easy way — just chat</h4>
+              <p>Open the xTool Laser Assistant from the link shared with you and type your question like you'd text a knowledgeable friend. Nothing to install, nothing to set up.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>
+              <h4>Add it to your own AI app</h4>
+              <p>Using an AI app that supports “MCP” or “Connectors” (such as Claude Desktop)? Add this one address, then ask your questions right there:</p>
+              <p style="margin-top:7px"><code>https://xtool-mcp.doublexl.workers.dev/mcp</code></p>
+            </div>
+          </div>
+        </div>
+        <p class="fineprint">Comfortable with a terminal? Run it on your own computer with <code>npx xtool-mcp</code>. Full source and docs are on GitHub (free, MIT-licensed).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <div class="safety">
+    <div class="cap"><svg viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/></svg> Safety is non-negotiable</div>
+    <ul class="safelist">
+      <li><b>Test on scrap first.</b> Every setting is a starting point, not a promise — always dial it in on a spare piece.</li>
+      <li><b>Never cut PVC, vinyl, or faux leather.</b> They release chlorine gas that harms you and ruins your machine.</li>
+      <li><b>Never run a laser unattended.</b> Stay with the machine, keep a fire extinguisher nearby.</li>
+      <li><b>Ventilate and protect your eyes.</b> Use fume extraction and the right eye protection; use air assist where available.</li>
+      <li><b>Check generated files before running.</b> Open any <code style="font-family:inherit;color:#fff">.xcs</code> in Studio/XCS and confirm the machine, placement, and parameters.</li>
+      <li><b>When in doubt, follow xTool.</b> If this guidance and xTool's official docs disagree, xTool wins.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="fnote"><b>xtool-mcp</b> is an unofficial, community project — not affiliated with, endorsed by, or sponsored by xTool. “xTool,” “xTool Creative Space,” and “xTool Studio” are trademarks of their respective owners. Free &amp; open source (MIT). Covers 14 machines, 100+ material-settings references, and common troubleshooting.</p>
+    <div class="endpoint"><span class="lbl">Connect / learn more</span>xtool-mcp.doublexl.workers.dev</div>
+  </footer>
+
+</div>
+<script>
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && window.parent !== window) {
+    window.parent.postMessage({ type: 'close-fullscreen' }, '*');
+  }
+});
+</script>
+<!-- broken-img-handler -->
+<script>
+(function(){
+  if(window.__brokenImgHandler)return;
+  window.__brokenImgHandler=true;
+  var MAX=5,DELAYS=[2000,4000,8000,16000,32000];
+  document.addEventListener('error',function(e){
+    var img=e.target;
+    if(!img||img.tagName!=='IMG')return;
+    var liveSrc=img.getAttribute('src');
+    var src=img.dataset.haOriginalSrc||liveSrc;
+    if(!src)return;
+    if(img.dataset.haOriginalSrc&&liveSrc&&liveSrc!==img.dataset.haOriginalSrc&&liveSrc.indexOf('_r=')<0){src=liveSrc;img.dataset.haOriginalSrc=src;img.dataset.haRetryCount='0'}
+    else if(!img.dataset.haOriginalSrc){img.dataset.haOriginalSrc=src}
+    var attempt=parseInt(img.dataset.haRetryCount||'0',10);
+    if(img.dataset.haPhId){var old=document.getElementById(img.dataset.haPhId);if(old)old.remove()}
+    var ph=document.createElement('div');
+    ph.className='ha-img-placeholder'+(attempt>=MAX?' ha-failed':'');
+    ph.id='ha-ph-'+Math.random().toString(36).slice(2,9);
+    var w=img.getAttribute('width');var h=img.getAttribute('height');
+    if(w)ph.style.width=w+(isNaN(Number(w))?'':'px');
+    else if(img.style.width)ph.style.width=img.style.width;
+    else if(img.width>1)ph.style.width=img.width+'px';
+    if(h)ph.style.height=h+(isNaN(Number(h))?'':'px');
+    else if(img.style.height)ph.style.height=img.style.height;
+    else if(img.height>1)ph.style.height=img.height+'px';
+    ph.textContent=attempt>=MAX?'Image unavailable':'Loading image\u2026';
+    img.dataset.haPhId=ph.id;
+    if(img.dataset.haOrigDisplay==null)img.dataset.haOrigDisplay=img.style.display||'';
+    img.style.display='none';
+    img.insertAdjacentElement('afterend',ph);
+    if(attempt<MAX){
+      img.dataset.haRetryCount=String(attempt+1);
+      setTimeout(function(){
+        if(!img.isConnected)return;
+        if(img.dataset.haOriginalSrc!==src)return;
+        if(img.complete&&img.naturalWidth>0)return;
+        var curSrc=img.getAttribute('src');
+        if(curSrc&&curSrc.indexOf(src)!==0)return;
+        var fresh=src+(src.indexOf('?')>=0?'&':'?')+'_r='+(attempt+1)+'_'+Date.now();
+        img.src=fresh;
+      },DELAYS[attempt]);
+    }
+  },true);
+  document.addEventListener('load',function(e){
+    var img=e.target;
+    if(!img||img.tagName!=='IMG')return;
+    if(img.dataset.haPhId){
+      var ph=document.getElementById(img.dataset.haPhId);
+      if(ph)ph.remove();
+      delete img.dataset.haPhId;
+      img.style.display=img.dataset.haOrigDisplay||'';
+      delete img.dataset.haOrigDisplay;
+      delete img.dataset.haOriginalSrc;
+      delete img.dataset.haRetryCount;
+    }
+  },true);
+})();
+</script>
+</body>
+</html>
